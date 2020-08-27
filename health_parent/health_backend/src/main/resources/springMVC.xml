@@ -3,13 +3,15 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	    http://www.springframework.org/schema/beans/spring-beans.xsd
 	    http://www.springframework.org/schema/mvc
 	    http://www.springframework.org/schema/mvc/spring-mvc.xsd
 	    http://code.alibabatech.com/schema/dubbo
-	    http://code.alibabatech.com/schema/dubbo/dubbo.xsd
-	    ">
+	    http://code.alibabatech.com/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:redis.properties" />
 
     <mvc:annotation-driven>
         <mvc:message-converters register-defaults="true">
@@ -65,9 +67,9 @@
 
     <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
         <constructor-arg name="poolConfig" ref="jedisPoolConfig"/>
-        <constructor-arg name="host" value="144.34.156.58"/>
-        <constructor-arg name="port" value="6379" type="int"/>
-        <constructor-arg name="timeout" value="30000" type="int"/>
+        <constructor-arg name="host" value="${redis.host}"/>
+        <constructor-arg name="port" value="${redis.port}" type="int"/>
+        <constructor-arg name="timeout" value="${redis.timeout}" type="int"/>
     </bean>
     <import resource="spring-security.xml"></import>
 
