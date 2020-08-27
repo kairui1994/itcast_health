@@ -19,7 +19,7 @@
 
 	<dubbo:application name="health_service_provider"/>
 	<!--2.配置注册中心的地址-->
-	<dubbo:registry address="zookeeper://144.34.156.58:2181"/>
+	<dubbo:registry address="zookeeper://127.0.0.1:2181"/>
 	<!--3.配置dubbo包扫描-->
 	<dubbo:annotation package="com.xdsdjq.service.impl" />
 
