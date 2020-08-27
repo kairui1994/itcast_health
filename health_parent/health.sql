@@ -11,8 +11,9 @@
  Target Server Version : 50729
  File Encoding         : 65001
 
- Date: 27/08/2020 18:00:58
+ Date: 27/08/2020 22:42:01
 */
+
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -21,14 +22,14 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_checkgroup`;
 CREATE TABLE `t_checkgroup` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `code` varchar(32) DEFAULT NULL,
-  `name` varchar(32) DEFAULT NULL,
-  `helpCode` varchar(32) DEFAULT NULL,
-  `sex` char(1) DEFAULT NULL,
-  `remark` varchar(128) DEFAULT NULL,
-  `attention` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+                                `id` int(11) NOT NULL AUTO_INCREMENT,
+                                `code` varchar(32) DEFAULT NULL,
+                                `name` varchar(32) DEFAULT NULL,
+                                `helpCode` varchar(32) DEFAULT NULL,
+                                `sex` char(1) DEFAULT NULL,
+                                `remark` varchar(128) DEFAULT NULL,
+                                `attention` varchar(128) DEFAULT NULL,
+                                PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -54,12 +55,12 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_checkgroup_checkitem`;
 CREATE TABLE `t_checkgroup_checkitem` (
-  `checkgroup_id` int(11) NOT NULL DEFAULT '0',
-  `checkitem_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`checkgroup_id`,`checkitem_id`),
-  KEY `item_id` (`checkitem_id`),
-  CONSTRAINT `group_id` FOREIGN KEY (`checkgroup_id`) REFERENCES `t_checkgroup` (`id`),
-  CONSTRAINT `item_id` FOREIGN KEY (`checkitem_id`) REFERENCES `t_checkitem` (`id`)
+                                          `checkgroup_id` int(11) NOT NULL DEFAULT '0',
+                                          `checkitem_id` int(11) NOT NULL DEFAULT '0',
+                                          PRIMARY KEY (`checkgroup_id`,`checkitem_id`),
+                                          KEY `item_id` (`checkitem_id`),
+                                          CONSTRAINT `group_id` FOREIGN KEY (`checkgroup_id`) REFERENCES `t_checkgroup` (`id`),
+                                          CONSTRAINT `item_id` FOREIGN KEY (`checkitem_id`) REFERENCES `t_checkitem` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -141,16 +142,16 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_checkitem`;
 CREATE TABLE `t_checkitem` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `code` varchar(16) DEFAULT NULL,
-  `name` varchar(32) DEFAULT NULL,
-  `sex` char(1) DEFAULT NULL,
-  `age` varchar(32) DEFAULT NULL,
-  `price` float DEFAULT NULL,
-  `type` char(1) DEFAULT NULL COMMENT '查检项类型,分为检查和检验两种',
-  `attention` varchar(128) DEFAULT NULL,
-  `remark` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+                               `id` int(11) NOT NULL AUTO_INCREMENT,
+                               `code` varchar(16) DEFAULT NULL,
+                               `name` varchar(32) DEFAULT NULL,
+                               `sex` char(1) DEFAULT NULL,
+                               `age` varchar(32) DEFAULT NULL,
+                               `price` float DEFAULT NULL,
+                               `type` char(1) DEFAULT NULL COMMENT '查检项类型,分为检查和检验两种',
+                               `attention` varchar(128) DEFAULT NULL,
+                               `remark` varchar(128) DEFAULT NULL,
+                               PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -229,20 +230,20 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_member`;
 CREATE TABLE `t_member` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fileNumber` varchar(32) DEFAULT NULL,
-  `name` varchar(32) DEFAULT NULL,
-  `sex` varchar(8) DEFAULT NULL,
-  `idCard` varchar(18) DEFAULT NULL,
-  `phoneNumber` varchar(11) DEFAULT NULL,
-  `regTime` date DEFAULT NULL,
-  `password` varchar(32) DEFAULT NULL,
-  `email` varchar(32) DEFAULT NULL,
-  `birthday` date DEFAULT NULL,
-  `remark` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `fileNumber` (`fileNumber`),
-  UNIQUE KEY `idCard` (`idCard`)
+                            `id` int(11) NOT NULL AUTO_INCREMENT,
+                            `fileNumber` varchar(32) DEFAULT NULL,
+                            `name` varchar(32) DEFAULT NULL,
+                            `sex` varchar(8) DEFAULT NULL,
+                            `idCard` varchar(18) DEFAULT NULL,
+                            `phoneNumber` varchar(11) DEFAULT NULL,
+                            `regTime` date DEFAULT NULL,
+                            `password` varchar(32) DEFAULT NULL,
+                            `email` varchar(32) DEFAULT NULL,
+                            `birthday` date DEFAULT NULL,
+                            `remark` varchar(128) DEFAULT NULL,
+                            PRIMARY KEY (`id`),
+                            UNIQUE KEY `fileNumber` (`fileNumber`),
+                            UNIQUE KEY `idCard` (`idCard`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10037 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -306,19 +307,19 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_menu`;
 CREATE TABLE `t_menu` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(128) DEFAULT NULL,
-  `linkUrl` varchar(128) DEFAULT NULL,
-  `path` varchar(128) DEFAULT NULL,
-  `priority` int(11) DEFAULT NULL,
-  `icon` varchar(64) DEFAULT NULL,
-  `description` varchar(128) DEFAULT NULL,
-  `parentMenuId` int(11) DEFAULT NULL,
-  `level` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_Reference_13` (`parentMenuId`),
-  CONSTRAINT `FK_Reference_13` FOREIGN KEY (`parentMenuId`) REFERENCES `t_menu` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+                          `id` int(11) NOT NULL AUTO_INCREMENT,
+                          `name` varchar(128) DEFAULT NULL,
+                          `linkUrl` varchar(128) DEFAULT NULL,
+                          `path` varchar(128) DEFAULT NULL,
+                          `priority` int(11) DEFAULT NULL,
+                          `icon` varchar(64) DEFAULT NULL,
+                          `description` varchar(128) DEFAULT NULL,
+                          `parentMenuId` int(11) DEFAULT NULL,
+                          `level` int(11) DEFAULT NULL,
+                          PRIMARY KEY (`id`),
+                          KEY `FK_Reference_13` (`parentMenuId`),
+                          CONSTRAINT `FK_Reference_13` FOREIGN KEY (`parentMenuId`) REFERENCES `t_menu` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_menu
@@ -344,6 +345,8 @@ INSERT INTO `t_menu` VALUES (18, '角色管理', 'role.html', '/6-3', 3, NULL, N
 INSERT INTO `t_menu` VALUES (19, '用户管理', 'user.html', '/6-4', 4, NULL, NULL, 15, 2);
 INSERT INTO `t_menu` VALUES (20, '套餐占比', 'report_setmeal.html', '/5-2', 2, NULL, NULL, 13, 2);
 INSERT INTO `t_menu` VALUES (21, '运营数据', 'report_business.html', '/5-3', 3, NULL, NULL, 13, 2);
+INSERT INTO `t_menu` VALUES (22, '工作台', 'work_platform.htlm', '1', 5, 'fa-dashboard', NULL, NULL, 1);
+INSERT INTO `t_menu` VALUES (23, '地址管理', 'address_setting.html', '/1-1', 1, NULL, NULL, 22, 2);
 COMMIT;
 
 -- ----------------------------
@@ -351,17 +354,17 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_order`;
 CREATE TABLE `t_order` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `member_id` int(11) DEFAULT NULL COMMENT '员会id',
-  `orderDate` date DEFAULT NULL COMMENT '约预日期',
-  `orderType` varchar(8) DEFAULT NULL COMMENT '约预类型 电话预约/微信预约',
-  `orderStatus` varchar(8) DEFAULT NULL COMMENT '预约状态（是否到诊）',
-  `setmeal_id` int(11) DEFAULT NULL COMMENT '餐套id',
-  PRIMARY KEY (`id`),
-  KEY `key_member_id` (`member_id`),
-  KEY `key_setmeal_id` (`setmeal_id`),
-  CONSTRAINT `key_member_id` FOREIGN KEY (`member_id`) REFERENCES `t_member` (`id`),
-  CONSTRAINT `key_setmeal_id` FOREIGN KEY (`setmeal_id`) REFERENCES `t_setmeal` (`id`)
+                           `id` int(11) NOT NULL AUTO_INCREMENT,
+                           `member_id` int(11) DEFAULT NULL COMMENT '员会id',
+                           `orderDate` date DEFAULT NULL COMMENT '约预日期',
+                           `orderType` varchar(8) DEFAULT NULL COMMENT '约预类型 电话预约/微信预约',
+                           `orderStatus` varchar(8) DEFAULT NULL COMMENT '预约状态（是否到诊）',
+                           `setmeal_id` int(11) DEFAULT NULL COMMENT '餐套id',
+                           PRIMARY KEY (`id`),
+                           KEY `key_member_id` (`member_id`),
+                           KEY `key_setmeal_id` (`setmeal_id`),
+                           CONSTRAINT `key_member_id` FOREIGN KEY (`member_id`) REFERENCES `t_member` (`id`),
+                           CONSTRAINT `key_setmeal_id` FOREIGN KEY (`setmeal_id`) REFERENCES `t_setmeal` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -388,11 +391,11 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_ordersetting`;
 CREATE TABLE `t_ordersetting` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `orderDate` date NOT NULL COMMENT '约预日期',
-  `number` int(11) NOT NULL COMMENT '可预约人数',
-  `reservations` int(11) DEFAULT NULL COMMENT '已预约人数',
-  PRIMARY KEY (`id`)
+                                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                                  `orderDate` date NOT NULL COMMENT '约预日期',
+                                  `number` int(11) NOT NULL COMMENT '可预约人数',
+                                  `reservations` int(11) DEFAULT NULL COMMENT '已预约人数',
+                                  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -441,11 +444,11 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_permission`;
 CREATE TABLE `t_permission` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) DEFAULT NULL,
-  `keyword` varchar(64) DEFAULT NULL,
-  `description` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+                                `id` int(11) NOT NULL AUTO_INCREMENT,
+                                `name` varchar(32) DEFAULT NULL,
+                                `keyword` varchar(64) DEFAULT NULL,
+                                `description` varchar(128) DEFAULT NULL,
+                                PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -485,12 +488,12 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_role`;
 CREATE TABLE `t_role` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) DEFAULT NULL,
-  `keyword` varchar(64) DEFAULT NULL,
-  `description` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+                          `id` int(11) NOT NULL AUTO_INCREMENT,
+                          `name` varchar(32) DEFAULT NULL,
+                          `keyword` varchar(64) DEFAULT NULL,
+                          `description` varchar(128) DEFAULT NULL,
+                          PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_role
@@ -498,6 +501,7 @@ CREATE TABLE `t_role` (
 BEGIN;
 INSERT INTO `t_role` VALUES (1, '系统管理员', 'ROLE_ADMIN', NULL);
 INSERT INTO `t_role` VALUES (2, '健康管理师', 'ROLE_HEALTH_MANAGER', NULL);
+INSERT INTO `t_role` VALUES (3, '测试', 'ROLE_TEST', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -505,12 +509,12 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_role_menu`;
 CREATE TABLE `t_role_menu` (
-  `role_id` int(11) NOT NULL,
-  `menu_id` int(11) NOT NULL,
-  PRIMARY KEY (`role_id`,`menu_id`),
-  KEY `FK_Reference_10` (`menu_id`),
-  CONSTRAINT `FK_Reference_10` FOREIGN KEY (`menu_id`) REFERENCES `t_menu` (`id`),
-  CONSTRAINT `FK_Reference_9` FOREIGN KEY (`role_id`) REFERENCES `t_role` (`id`)
+                               `role_id` int(11) NOT NULL,
+                               `menu_id` int(11) NOT NULL,
+                               PRIMARY KEY (`role_id`,`menu_id`),
+                               KEY `FK_Reference_10` (`menu_id`),
+                               CONSTRAINT `FK_Reference_10` FOREIGN KEY (`menu_id`) REFERENCES `t_menu` (`id`),
+                               CONSTRAINT `FK_Reference_9` FOREIGN KEY (`role_id`) REFERENCES `t_role` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -519,10 +523,13 @@ CREATE TABLE `t_role_menu` (
 BEGIN;
 INSERT INTO `t_role_menu` VALUES (1, 1);
 INSERT INTO `t_role_menu` VALUES (2, 1);
+INSERT INTO `t_role_menu` VALUES (3, 1);
 INSERT INTO `t_role_menu` VALUES (1, 2);
 INSERT INTO `t_role_menu` VALUES (2, 2);
+INSERT INTO `t_role_menu` VALUES (3, 2);
 INSERT INTO `t_role_menu` VALUES (1, 3);
 INSERT INTO `t_role_menu` VALUES (2, 3);
+INSERT INTO `t_role_menu` VALUES (3, 3);
 INSERT INTO `t_role_menu` VALUES (1, 5);
 INSERT INTO `t_role_menu` VALUES (1, 6);
 INSERT INTO `t_role_menu` VALUES (1, 7);
@@ -540,6 +547,8 @@ INSERT INTO `t_role_menu` VALUES (1, 18);
 INSERT INTO `t_role_menu` VALUES (1, 19);
 INSERT INTO `t_role_menu` VALUES (1, 20);
 INSERT INTO `t_role_menu` VALUES (1, 21);
+INSERT INTO `t_role_menu` VALUES (1, 22);
+INSERT INTO `t_role_menu` VALUES (1, 23);
 COMMIT;
 
 -- ----------------------------
@@ -547,12 +556,12 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_role_permission`;
 CREATE TABLE `t_role_permission` (
-  `role_id` int(11) NOT NULL,
-  `permission_id` int(11) NOT NULL,
-  PRIMARY KEY (`role_id`,`permission_id`),
-  KEY `FK_Reference_12` (`permission_id`),
-  CONSTRAINT `FK_Reference_11` FOREIGN KEY (`role_id`) REFERENCES `t_role` (`id`),
-  CONSTRAINT `FK_Reference_12` FOREIGN KEY (`permission_id`) REFERENCES `t_permission` (`id`)
+                                     `role_id` int(11) NOT NULL,
+                                     `permission_id` int(11) NOT NULL,
+                                     PRIMARY KEY (`role_id`,`permission_id`),
+                                     KEY `FK_Reference_12` (`permission_id`),
+                                     CONSTRAINT `FK_Reference_11` FOREIGN KEY (`role_id`) REFERENCES `t_role` (`id`),
+                                     CONSTRAINT `FK_Reference_12` FOREIGN KEY (`permission_id`) REFERENCES `t_permission` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -606,17 +615,17 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_setmeal`;
 CREATE TABLE `t_setmeal` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(128) DEFAULT NULL,
-  `code` varchar(8) DEFAULT NULL,
-  `helpCode` varchar(16) DEFAULT NULL,
-  `sex` char(1) DEFAULT NULL,
-  `age` varchar(32) DEFAULT NULL,
-  `price` float DEFAULT NULL,
-  `remark` varchar(128) DEFAULT NULL,
-  `attention` varchar(128) DEFAULT NULL,
-  `img` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+                             `id` int(11) NOT NULL AUTO_INCREMENT,
+                             `name` varchar(128) DEFAULT NULL,
+                             `code` varchar(8) DEFAULT NULL,
+                             `helpCode` varchar(16) DEFAULT NULL,
+                             `sex` char(1) DEFAULT NULL,
+                             `age` varchar(32) DEFAULT NULL,
+                             `price` float DEFAULT NULL,
+                             `remark` varchar(128) DEFAULT NULL,
+                             `attention` varchar(128) DEFAULT NULL,
+                             `img` varchar(128) DEFAULT NULL,
+                             PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -635,12 +644,12 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_setmeal_checkgroup`;
 CREATE TABLE `t_setmeal_checkgroup` (
-  `setmeal_id` int(11) NOT NULL DEFAULT '0',
-  `checkgroup_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`setmeal_id`,`checkgroup_id`),
-  KEY `checkgroup_key` (`checkgroup_id`),
-  CONSTRAINT `checkgroup_key` FOREIGN KEY (`checkgroup_id`) REFERENCES `t_checkgroup` (`id`),
-  CONSTRAINT `setmeal_key` FOREIGN KEY (`setmeal_id`) REFERENCES `t_setmeal` (`id`)
+                                        `setmeal_id` int(11) NOT NULL DEFAULT '0',
+                                        `checkgroup_id` int(11) NOT NULL DEFAULT '0',
+                                        PRIMARY KEY (`setmeal_id`,`checkgroup_id`),
+                                        KEY `checkgroup_key` (`checkgroup_id`),
+                                        CONSTRAINT `checkgroup_key` FOREIGN KEY (`checkgroup_id`) REFERENCES `t_checkgroup` (`id`),
+                                        CONSTRAINT `setmeal_key` FOREIGN KEY (`setmeal_id`) REFERENCES `t_setmeal` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -694,15 +703,15 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `birthday` date DEFAULT NULL,
-  `gender` varchar(1) DEFAULT NULL,
-  `username` varchar(32) DEFAULT NULL,
-  `password` varchar(256) DEFAULT NULL,
-  `remark` varchar(32) DEFAULT NULL,
-  `station` varchar(1) DEFAULT NULL,
-  `telephone` varchar(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+                          `id` int(11) NOT NULL AUTO_INCREMENT,
+                          `birthday` date DEFAULT NULL,
+                          `gender` varchar(1) DEFAULT NULL,
+                          `username` varchar(32) DEFAULT NULL,
+                          `password` varchar(256) DEFAULT NULL,
+                          `remark` varchar(32) DEFAULT NULL,
+                          `station` varchar(1) DEFAULT NULL,
+                          `telephone` varchar(11) DEFAULT NULL,
+                          PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -713,7 +722,7 @@ INSERT INTO `t_user` VALUES (1, '2020-08-04', '1', 'admin', '$2a$10$u/BcsUUqZNWU
 INSERT INTO `t_user` VALUES (2, '2020-08-31', '2', 'xiaoming', '$2a$10$lQSsQhPesJRbWPtR5HNmLepaSyyiDe2QMUZkbqMu8gjZdncoR9i8a', NULL, NULL, '18858886888');
 INSERT INTO `t_user` VALUES (3, '2015-08-06', '1', 'test', '$2a$10$zYJRscVUgHX1wqwu90WereuTmIg6h/JGirGG4SWBsZ60wVPCgtF8W', NULL, NULL, '13801851877');
 INSERT INTO `t_user` VALUES (4, '2020-08-03', '1', 'qwer', '$2a$10$5Ucod6sGQhmS5LLLrppU5.BM76/FVHfUoQaQAXWUJlnC2IkGbU7KG', NULL, NULL, '123455');
-INSERT INTO `t_user` VALUES (6, '1995-04-19', '1', 'huangqiang', '$2a$10$r1DIP8lVzYf2a5dDGDL4duKKB1xIkIMIsZEMzBFivpRRPhAkTNk0W', NULL, NULL, '1111');
+INSERT INTO `t_user` VALUES (6, '1995-04-19', '1', 'huangqiang', '$2a$10$u/BcsUUqZNWUxdmDhbnoeeobJy6IBsL1Gn/S0dMxI2RbSgnMKJ.4a', NULL, NULL, '1111');
 COMMIT;
 
 -- ----------------------------
@@ -721,12 +730,12 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user_role`;
 CREATE TABLE `t_user_role` (
-  `user_id` int(11) NOT NULL,
-  `role_id` int(11) NOT NULL,
-  PRIMARY KEY (`user_id`,`role_id`),
-  KEY `FK_Reference_8` (`role_id`),
-  CONSTRAINT `FK_Reference_7` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`),
-  CONSTRAINT `FK_Reference_8` FOREIGN KEY (`role_id`) REFERENCES `t_role` (`id`)
+                               `user_id` int(11) NOT NULL,
+                               `role_id` int(11) NOT NULL,
+                               PRIMARY KEY (`user_id`,`role_id`),
+                               KEY `FK_Reference_8` (`role_id`),
+                               CONSTRAINT `FK_Reference_7` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`),
+                               CONSTRAINT `FK_Reference_8` FOREIGN KEY (`role_id`) REFERENCES `t_role` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -735,6 +744,7 @@ CREATE TABLE `t_user_role` (
 BEGIN;
 INSERT INTO `t_user_role` VALUES (1, 1);
 INSERT INTO `t_user_role` VALUES (2, 2);
+INSERT INTO `t_user_role` VALUES (6, 3);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
