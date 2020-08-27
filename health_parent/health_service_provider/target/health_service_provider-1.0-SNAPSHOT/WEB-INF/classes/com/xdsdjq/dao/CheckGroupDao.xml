@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdsdjq.dao.CheckGroupDao">
+    <resultMap id="baseResult" type="com.xdsdjq.pojo.CheckGroup">
+        <result column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
+        <result column="helpCode" property="helpCode"/>
+        <result column="sex" property="sex"/>
+        <result column="remark" property="remark"/>
+        <result column="attention" property="attention"/>
+    </resultMap>
+    
+    <resultMap id="findByIdResultMap" type="com.xdsdjq.pojo.CheckGroup" extends="baseResult">
+        <!--检查组与检查项多对多关联-->
+        <collection property="checkItems"
+                    ofType="com.xdsdjq.pojo.CheckItem"
+                    column="id"
+                    javaType="arraylist"
+                    select="com.xdsdjq.dao.CheckItemDao.findCheckItemById"></collection>
+    </resultMap>
+
+    <insert id="addCheckGroup" parameterType="com.xdsdjq.pojo.CheckGroup">
+        <!--通过Mybatis的selectKey便签获取最后添加的id-->
+        <selectKey resultType="integer" keyProperty="id" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into t_checkgroup(code, name, helpCode, sex, remark, attention)
+        VALUES (#{code}, #{name}, #{helpCode}, #{sex}, #{remark}, #{attention})
+    </insert>
+
+    <insert id="addCheckGroupAndCheckItem" parameterType="int">
+        insert into t_checkgroup_checkitem
+        values (#{checkGroupId}, #{checkItemId})
+    </insert>
+
+    <select id="selectByCondition" parameterType="string" resultType="com.xdsdjq.pojo.CheckGroup">
+        select *
+        from t_checkgroup
+        <if test="queryString != null and queryString != ''">
+            where code = #{queryString}
+               or name = #{queryString}
+               or helpCode = #{queryString}
+        </if>
+    </select>
+
+    <delete id="deleteGroupAndItemByGroupId" parameterType="int">
+        delete
+        from t_checkgroup_checkitem
+        where checkgroup_id = #{id}
+    </delete>
+
+    <delete id="deleteCheckGroupById">
+        delete
+        from t_checkgroup
+        where id = #{id}
+    </delete>
+
+    <select id="findById" parameterType="int" resultType="com.xdsdjq.pojo.CheckGroup">
+        select *
+        from t_checkgroup
+        where id = #{id}
+    </select>
+
+    <select id="findCheckItemIdByGId" parameterType="int" resultType="java.lang.Integer">
+        select checkitem_id
+        from t_checkgroup_checkitem
+        where checkgroup_id = #{id}
+    </select>
+
+    <update id="editGroupAndItemsByCheckGroupId" parameterType="int">
+        update t_checkgroup_checkitem
+        <set>
+            <if test="checkItemId != null">
+                checkitem_id=#{checkItemId}
+            </if>
+        </set>
+        <where>
+            <if test="checkGroupId != null">
+                checkgroup_id = #{checkGroupId}
+            </if>
+        </where>
+    </update>
+
+    <update id="editCheckGroup" parameterType="com.xdsdjq.pojo.CheckGroup">
+        update t_checkgroup
+        <set>
+            <if test="code != null">
+                code=#{code},
+            </if>
+
+            <if test="name != null">
+                name=#{name},
+            </if>
+
+            <if test="helpCode != null">
+                helpCode=#{helpCode},
+            </if>
+
+            <if test="sex != null">
+                sex=#{sex},
+            </if>
+
+            <if test="remark != null">
+                remark=#{remark},
+            </if>
+
+            <if test="attention != null">
+                attention=#{attention},
+            </if>
+        </set>
+        <where>
+            <if test="id != null and id != ''">
+                id = #{id}
+            </if>
+        </where>
+    </update>
+
+    <select id="findAll" resultType="com.xdsdjq.pojo.CheckGroup">
+        select *
+        from t_checkgroup
+    </select>
+
+
+    <select id="findCheckGroupById" parameterType="int" resultMap="findByIdResultMap">
+        select *
+        from t_checkgroup
+        where id in (select checkgroup_id from t_setmeal_checkgroup where setmeal_id = #{id})
+    </select>
+</mapper>

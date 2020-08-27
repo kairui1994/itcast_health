@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdsdjq.dao.SetMealDao">
+    <resultMap id="BaseResultMap" type="com.xdsdjq.pojo.SetMeal">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="helpCode" jdbcType="VARCHAR" property="helpCode"/>
+        <result column="sex" jdbcType="CHAR" property="sex"/>
+        <result column="age" jdbcType="VARCHAR" property="age"/>
+        <result column="price" jdbcType="FLOAT" property="price"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="attention" jdbcType="VARCHAR" property="attention"/>
+        <result column="img" jdbcType="VARCHAR" property="img"/>
+    </resultMap>
+
+
+    <resultMap id="findByIdResultMap" type="com.xdsdjq.pojo.SetMeal" extends="BaseResultMap">
+        <!--多对多映射-->
+        <collection property="checkGroups"
+                    ofType="com.xdsdjq.pojo.CheckGroup"
+                    javaType="arraylist"
+                    column="id"
+                    select="com.xdsdjq.dao.CheckGroupDao.findCheckGroupById">
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,
+        `name`,
+        code,
+        helpCode,
+        sex,
+        age,
+        price,
+        remark,
+        attention,
+        img
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_setmeal
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from t_setmeal
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="addSetMeal" keyColumn="id" keyProperty="id" parameterType="com.xdsdjq.pojo.SetMeal" useGeneratedKeys="true">
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into t_setmeal
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="helpCode != null">
+                helpCode,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="age != null">
+                age,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="attention != null">
+                attention,
+            </if>
+            <if test="img != null">
+                img,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="helpCode != null">
+                #{helpCode,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=CHAR},
+            </if>
+            <if test="age != null">
+                #{age,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=FLOAT},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="attention != null">
+                #{attention,jdbcType=VARCHAR},
+            </if>
+            <if test="img != null">
+                #{img,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateSetMealByPrimaryKey" parameterType="com.xdsdjq.pojo.SetMeal">
+        update t_setmeal
+        <set>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="helpCode != null">
+                helpCode = #{helpCode,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=CHAR},
+            </if>
+            <if test="age != null">
+                age = #{age,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=FLOAT},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="attention != null">
+                attention = #{attention,jdbcType=VARCHAR},
+            </if>
+            <if test="img != null">
+                img = #{img,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <insert id="setSetMealAndCheckGroup" parameterType="int">
+        insert into t_setmeal_checkgroup(setmeal_id, checkgroup_id)
+        VALUES (#{setMealId}, #{checkGroupId})
+    </insert>
+
+    <select id="findPage" parameterType="string" resultMap="BaseResultMap">
+        select *
+        from t_setmeal
+        <where>
+            <if test="queryString != null and queryString != ''">
+                code = #{queryString}
+                        or name = #{queryString}
+                        or helpCode = #{queryString}
+            </if>
+        </where>
+    </select>
+
+    <select id="findSetMealAndCheckGroupById" resultType="java.lang.Integer">
+        select checkgroup_id
+        from t_setmeal_checkgroup
+        where setmeal_id = #{id}
+    </select>
+
+    <delete id="deleteSetMealAndGroup" parameterType="integer">
+        delete
+        from t_setmeal_checkgroup
+        where setmeal_id = #{id}
+    </delete>
+
+    <select id="getAllSetMeal" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_setmeal
+    </select>
+
+    <select id="findById" resultMap="findByIdResultMap">
+        select *
+        from t_setmeal
+        where id = #{id}
+    </select>
+
+    <select id="findSetMealCount" resultType="java.util.Map">
+        select s.name, count(o.id) as value
+        from t_order o,
+             t_setmeal s
+        where o.setmeal_id = s.id
+        group by s.name
+    </select>
+</mapper>

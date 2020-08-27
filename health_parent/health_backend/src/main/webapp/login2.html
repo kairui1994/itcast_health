@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>传智健康</title>
+    <meta name="description" content="传智健康">
+    <meta name="keywords" content="传智健康">
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <!-- 引入样式 -->
+    <script src="js/vue.js"></script>
+    <script src="js/axios-0.18.0.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <link rel="stylesheet" href="plugins/elementui/index.css">
+    <!-- 引入组件库 -->
+    <script src="plugins/elementui/index.js"></script>
+</head>
+<body class="hold-transition skin-purple sidebar-mini">
+<div id="app">
+    <template>
+        <div class="login-container">
+            <el-form :model="formData" :rules="rules2"
+                     status-icon
+                     ref="formData"
+                     label-position="left"
+                     label-width="0px"
+                     class="demo-ruleForm login-page">
+                <h3 class="title" style="text-align: center">传智健康系统登录</h3>
+                <el-form-item prop="username">
+                    <el-input type="text"
+                              v-model="formData.username"
+                              auto-complete="off"
+                              placeholder="用户名"
+                    ></el-input>
+                </el-form-item>
+                <el-form-item prop="password">
+                    <el-input type="password"
+                              v-model="formData.password"
+                              auto-complete="off"
+                              placeholder="密码"
+                              show-password
+                    ></el-input>
+                </el-form-item>
+                <el-checkbox
+                        v-model="checked"
+                        class="rememberme"
+                >记住密码</el-checkbox>
+                <el-form-item style="width:100%;">
+                    <el-button type="primary" style="width:100%;" @click="handleSubmit" :loading="logining">登录</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
+    </template>
+</div>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data(){
+            return {
+                logining: false,
+                formData: {
+                    username: 'admin',
+                    password: '1234',
+                },
+                rules2: {
+                    username: [{required: true, message: 'please enter your account', trigger: 'blur'}],
+                    password: [{required: true, message: 'enter your password', trigger: 'blur'}]
+                },
+                checked: false
+            }
+        },
+        methods: {
+            handleSubmit(){
+                this.$refs.formData.validate((valid) => {
+                    if(valid){
+                        this.logining = true;
+                        if(this.formData.username === 'admin' &&
+                            this.formData.password === '1234'){
+                            this.logining = false;
+                            sessionStorage.setItem('user', this.formData.username);
+                            this.$router.push({path: '/'});
+                        }else{
+                            this.logining = false;
+                            this.$alert('username or password wrong!', 'info', {
+                                confirmButtonText: 'ok'
+                            })
+                        }
+                    }else{
+                        console.log('error submit!');
+                        return false;
+                    }
+                })
+            }
+        }
+    })
+</script>
+<style scoped>
+    .login-container {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: url("img/bg.jpg");
+        -moz-background-size: 100% 100%;
+        background-size: cover;
+        top: 0px;
+        left: 0px;
+    }
+    .login-page {
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+        margin: 180px auto;
+        width: 350px;
+        padding: 35px 35px 15px;
+        background: #fff;
+        border: 1px solid #eaeaea;
+        box-shadow: 0 0 25px #cac6c6;
+    }
+    label.el-checkbox.rememberme {
+        margin: 0px 0px 15px;
+        text-align: left;
+    }
+</style>
+</html>
