@@ -1,0 +1,2 @@
+注意：在本地启动需要修改health_service_provider下的jdbc.properties
+将密码 修改成自己数据库密码
