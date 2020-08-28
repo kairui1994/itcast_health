@@ -29,4 +29,7 @@
           and tr.id = trp.role_id
           and tr.id = #{roleId}
     </select>
+    <select id="findAll" resultType="com.xdsdjq.pojo.Permission">
+        select * from t_permission
+    </select>
 </mapper>
