@@ -90,7 +90,6 @@ public class RoleController {
     }
 
     @RequestMapping("/addPermission")
-    @PreAuthorize("hasAuthority('PERMISSION_ADD')")
     public Result addPermission(Integer[] permissionIds, Integer id) {
 
         try {
