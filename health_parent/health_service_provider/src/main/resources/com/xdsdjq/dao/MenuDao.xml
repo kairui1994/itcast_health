@@ -49,4 +49,8 @@
     <select id="selectByCondition" resultType="com.xdsdjq.pojo.Menu">
         select * from  t_menu
     </select>
+
+    <select id="findAll" resultType="com.xdsdjq.pojo.Menu">
+        select * from t_menu
+    </select>
 </mapper>

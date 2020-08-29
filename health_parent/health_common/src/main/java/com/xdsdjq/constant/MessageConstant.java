@@ -103,4 +103,13 @@ public class MessageConstant {
 
     public static final String GRANT_ROLE_SUCCESS = "授予角色成功";
     public static final String GRANT_ROLE_FAIL = "授予角色失败";
+
+    public static final String QUERY_MENU_FAIL = "查询菜单信息失败";
+    public static final String QUERY_MENU_SUCCESS = "查询菜单信息成功";
+    public static final String ADD_MENU_FAIL = "添加菜单信息失败";
+    public static final String ADD_MENU_SUCCESS = "添加菜单信息成功";
+    public static final String EDIT_MENU_FAIL = "编辑菜单信息失败";
+    public static final String EDIT_MENU_SUCCESS = "编辑菜单信息成功";
+    public static final String DELETE_MENU_FAIL = "删除菜单信息失败";
+    public static final String DELETE_MENU_SUCCESS = "删除菜单信息成功";
 }

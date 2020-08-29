@@ -9,4 +9,6 @@ public interface MenuDao {
     Menu findMenuById(Integer id);
 
     List<Menu> selectByCondition(String queryString);
+
+    List<Menu> findAll();
 }
