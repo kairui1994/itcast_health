@@ -20,7 +20,6 @@ public class RoleController {
     private RoleService roleService;
 
     @RequestMapping("/findAll")
-    @PreAuthorize("hasAuthority('ROLE_QUERY')")
     public Result findAll() {
         try {
             List<Role> list = roleService.findAll();
@@ -90,7 +89,6 @@ public class RoleController {
     }
 
     @RequestMapping("/addPermission")
-    @PreAuthorize("hasAuthority('PERMISSION_ADD')")
     public Result addPermission(Integer[] permissionIds,Integer id) {
 
         try {
