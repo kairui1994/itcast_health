@@ -57,9 +57,10 @@ public class UserController {
     }
 
     @RequestMapping("/add")
-    public Result add(@RequestBody User user) {
+    public Result add(int[] roleIds,@RequestBody User user) {
         try {
-            userService.add(user);
+            System.out.println(roleIds);
+            userService.add(user,roleIds);
             return new Result(true, MessageConstant.ADD_USER_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();

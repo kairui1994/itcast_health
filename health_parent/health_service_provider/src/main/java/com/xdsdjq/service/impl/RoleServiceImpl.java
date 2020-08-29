@@ -30,8 +30,9 @@ public class RoleServiceImpl implements RoleService {
         Integer id = role.getId();
         setRoleAndPermission(id, permissionIds);
     }
+
     // 设置中间表关系
-    public void setRoleAndPermission(Integer id,Integer[] permissionIds){
+    public void setRoleAndPermission(Integer id, Integer[] permissionIds) {
         if (permissionIds != null && permissionIds.length > 0) {
             for (Integer permissionId : permissionIds) {
                 roleDao.setRoleAndPermission(id, permissionId);
@@ -69,5 +70,10 @@ public class RoleServiceImpl implements RoleService {
     public void addPermission(Integer[] permissionIds, Integer id) {
         roleDao.deleteRoleAndPermission(id);
         setRoleAndPermission(id, permissionIds);
+    }
+
+    @Override
+    public List<Integer> findRoleIdsByUserId(int userId) {
+        return roleDao.findRoleIdsByUserId(userId);
     }
 }

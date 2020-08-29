@@ -18,4 +18,6 @@ public interface RoleService {
     void deleteRole(Integer id);
 
     void addPermission(Integer[] permissionIds, Integer id);
+
+    List<Integer> findRoleIdsByUserId(int userId);
 }

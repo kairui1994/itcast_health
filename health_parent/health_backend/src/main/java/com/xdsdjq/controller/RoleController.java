@@ -91,7 +91,7 @@ public class RoleController {
 
     @RequestMapping("/addPermission")
     @PreAuthorize("hasAuthority('PERMISSION_ADD')")
-    public Result addPermission(Integer[] permissionIds,Integer id) {
+    public Result addPermission(Integer[] permissionIds, Integer id) {
 
         try {
             roleService.addPermission(permissionIds, id);
@@ -99,6 +99,18 @@ public class RoleController {
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(false, MessageConstant.ADD_PERMISSION_FAIL);
+        }
+    }
+
+
+    @RequestMapping("/findRoleIdsByUserId")
+    public Result findRoleIdsByUserId(Integer userId) {
+        try {
+            List<Integer> roles = roleService.findRoleIdsByUserId(userId);
+            return new Result(true, MessageConstant.QUERY_ROLE_SUCCESS, roles);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.QUERY_ROLE_FAIL);
         }
     }
 }

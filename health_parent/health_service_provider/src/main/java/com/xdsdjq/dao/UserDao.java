@@ -1,6 +1,5 @@
 package com.xdsdjq.dao;
 
-import com.xdsdjq.pojo.CheckGroup;
 import com.xdsdjq.pojo.User;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,4 +17,6 @@ public interface UserDao {
     void edit(User user);
 
     void deleteById(Integer  id);
+
+    void deleteRoleByUseId(Integer userId);
 }

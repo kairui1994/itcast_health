@@ -3,6 +3,7 @@ package com.xdsdjq.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xdsdjq.dao.RoleDao;
 import com.xdsdjq.dao.UserDao;
 import com.xdsdjq.entity.PageResult;
 import com.xdsdjq.entity.QueryPageBean;
@@ -22,6 +23,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private RoleDao roleDao;
 
     public User findByUsername(String username) {
         User user = userDao.findByUsername(username);
@@ -84,9 +88,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void add(User user) {
+    public void add(User user,int[] roleIds) {
         user.setPassword(MD5Utils.passwordEncoder(user.getPassword()));
         userDao.add(user);
+        Integer userId = user.getId();
+
+        for (int roleId : roleIds) {
+            roleDao.addRoleByUserId(userId,roleId);
+        }
+
     }
 
     @Override
@@ -106,7 +116,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteById(Integer id) {
-        userDao.deleteById(id);
+    public void deleteById(Integer userId) {
+        userDao.deleteRoleByUseId(userId);
+        userDao.deleteById(userId);
     }
 }
