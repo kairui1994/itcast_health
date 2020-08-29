@@ -16,7 +16,9 @@ public interface UserDao {
 
     void edit(User user);
 
-    void deleteById(Integer  id);
+    void deleteById(Integer id);
 
     void deleteRoleByUseId(Integer userId);
+
+    void addRoleByUserId(@Param("userId") Integer userId, @Param("roleId") Integer roleId);
 }

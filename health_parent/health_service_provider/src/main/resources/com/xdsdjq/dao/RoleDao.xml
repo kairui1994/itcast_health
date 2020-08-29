@@ -95,7 +95,7 @@
         where id = #{id}
     </delete>
 
-    <insert id="addRoleByUserId" parameterType="int">
+    <insert id="addRoleByUserId" parameterType="integer">
         insert into t_user_role(user_id, role_id)
         values (#{userId}, #{roleId})
     </insert>

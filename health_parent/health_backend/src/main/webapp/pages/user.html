@@ -67,58 +67,58 @@
                     <el-tabs v-model="activeName" type="card">
                         <el-tab-pane label="基本信息" name="first">
                             <el-form ref="dataAddForm"
-                                 :model="formData"
-                                 :rules="rules"
-                                 label-position="right"
-                                 label-width="100px">
-                            <el-row>
-                                <el-col :span="12">
-                                    <el-form-item label="用户名" prop="username">
-                                        <el-input type="text"
-                                                  v-model="formData.username"
-                                                  auto-complete="off"
-                                                  placeholder="请输入用户名"
-                                        ></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="12">
-                                    <el-form-item label="密码" prop="password">
-                                        <el-input
-                                                  v-model="formData.password"
-                                                  placeholder="请输入密码"
-                                                  auto-complete="off"
-                                                  show-password>
-                                        </el-input>
-                                    </el-form-item>
-                                </el-col>
-                            </el-row>
-                            <el-row>
-                                <el-col :span="12">
-                                    <el-form-item label="性别">
-                                        <el-select v-model="formData.gender">
-                                            <el-option label="男" value="1"></el-option>
-                                            <el-option label="女" value="0"></el-option>
-                                        </el-select>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="12">
-                                    <el-form-item label="生日">
-                                        <el-date-picker
-                                                v-model="birthday"
-                                                type="date"
-                                                placeholder="选择日期">
-                                        </el-date-picker>
-                                    </el-form-item>
-                                </el-col>
-                            </el-row>
-                            <el-row>
-                                <el-col :span="12">
-                                    <el-form-item label="手机号码">
-                                        <el-input v-model="formData.telephone" type="text"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                            </el-row>
-                        </el-form>
+                                     :model="formData"
+                                     :rules="rules"
+                                     label-position="right"
+                                     label-width="100px">
+                                <el-row>
+                                    <el-col :span="12">
+                                        <el-form-item label="用户名" prop="username">
+                                            <el-input type="text"
+                                                      v-model="formData.username"
+                                                      auto-complete="off"
+                                                      placeholder="请输入用户名"
+                                            ></el-input>
+                                        </el-form-item>
+                                    </el-col>
+                                    <el-col :span="12">
+                                        <el-form-item label="密码" prop="password">
+                                            <el-input
+                                                    v-model="formData.password"
+                                                    placeholder="请输入密码"
+                                                    auto-complete="off"
+                                                    show-password>
+                                            </el-input>
+                                        </el-form-item>
+                                    </el-col>
+                                </el-row>
+                                <el-row>
+                                    <el-col :span="12">
+                                        <el-form-item label="性别">
+                                            <el-select v-model="formData.gender">
+                                                <el-option label="男" value="1"></el-option>
+                                                <el-option label="女" value="0"></el-option>
+                                            </el-select>
+                                        </el-form-item>
+                                    </el-col>
+                                    <el-col :span="12">
+                                        <el-form-item label="生日">
+                                            <el-date-picker
+                                                    v-model="birthday"
+                                                    type="date"
+                                                    placeholder="选择日期">
+                                            </el-date-picker>
+                                        </el-form-item>
+                                    </el-col>
+                                </el-row>
+                                <el-row>
+                                    <el-col :span="12">
+                                        <el-form-item label="手机号码">
+                                            <el-input v-model="formData.telephone" type="text"></el-input>
+                                        </el-form-item>
+                                    </el-col>
+                                </el-row>
+                            </el-form>
                         </el-tab-pane>
 
                         <el-tab-pane label="角色信息" name="second">
@@ -163,10 +163,10 @@
                             </template>
                         </el-tab-pane>
                     </el-tabs>
-                        <div slot="footer" class="dialog-footer">
-                            <el-button @click="dialogFormVisible = false">取消</el-button>
-                            <el-button type="primary" @click="handleAdd()">确定</el-button>
-                        </div>
+                    <div slot="footer" class="dialog-footer">
+                        <el-button @click="dialogFormVisible = false">取消</el-button>
+                        <el-button type="primary" @click="handleAdd()">确定</el-button>
+                    </div>
                 </el-dialog>
             </div>
 
@@ -256,11 +256,44 @@
                                 </table>
                             </div>
                         </el-tab-pane>
-
                     </el-tabs>
                     <div slot="footer" class="dialog-footer">
                         <el-button @click="dialogFormVisible4Edit = false">取消</el-button>
                         <el-button type="primary" @click="handleEdit()">确定</el-button>
+                    </div>
+                </el-dialog>
+            </div>
+
+            <!--添加角色弹层-->
+            <div class="add-form">
+                <el-dialog title="添加角色" :visible.sync="dialogFormVisibleAddRoles">
+                        <div class="checkScrol">
+                            <table class="datatable">
+                                <thead>
+                                <tr>
+                                    <th>选择</th>
+                                    <th>角色编码</th>
+                                    <th>角色名称</th>
+                                    <th>角色关键字</th>
+                                    <th>角色描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="c in tableData">
+                                    <td>
+                                        <input :id="c.id" v-model="roleIds" type="checkbox" :value="c.id">
+                                    </td>
+                                    <td><label :for="c.id">{{c.id}}</label></td>
+                                    <td><label :for="c.id">{{c.name}}</label></td>
+                                    <td><label :for="c.id">{{c.keyword}}</label></td>
+                                    <td><label :for="c.id">{{c.description}}</label></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    <div slot="footer" class="dialog-footer">
+                        <el-button @click="dialogFormVisibleAddRoles = false">取消</el-button>
+                        <el-button type="primary" @click="handleAddRole()">确定</el-button>
                     </div>
                 </el-dialog>
             </div>
@@ -288,12 +321,13 @@
             activeName: 'first',//添加/编辑窗口Tab标签名称
             dataList: [],//当前页要展示的分页列表数据
             formData: {},//表单数据
-            tableData:{},
+            tableData: {},
             multipleSelection: [],
             dialogFormVisible: false,//增加表单是否可见
             dialogFormVisible4Edit: false,//编辑表单是否可见
-            dialogFormVisibleAddRoles:false,//添加角色窗口是否可见,
-            roleIds:[],//添加角色的ids
+            dialogFormVisibleAddRoles: false,//添加角色窗口是否可见,
+            roleIds: [],//添加角色的ids
+            userId:null,
             rules: {//校验规则
                 username: [{required: true, message: '用户名为必填项', trigger: 'blur'}],
                 password: [{required: true, message: '密码为必填项', trigger: 'blur'}]
@@ -305,6 +339,41 @@
             this.findPage();
         },
         methods: {
+            //弹出添加角色窗口
+            handleAuthorize(row) {
+                this.dialogFormVisibleAddRoles = true
+                this.userId=row.id
+                axios.get("/role/findAll.do").then((res) => {
+                    if (res.data.flag) {
+                        this.tableData = res.data.data;
+                    }
+                    //回显已选角色
+                    axios.get("/role/findRoleIdsByUserId.do?userId=" + row.id).then((res) => {
+                        this.roleIds = res.data.data
+                    })
+                })
+            },
+
+            //添加角色确定
+            handleAddRole(){
+                axios.post("/user/addRoleByUserId.do?roleIds=" + this.roleIds+"&userId="+this.userId).then((res) => {
+                    if (res.data.flag) {
+                        //提交成功
+                        this.$message({
+                            type: 'success',
+                            message: res.data.message
+                        })
+                    } else {
+                        //编辑失败
+                        this.$message.error(res.data.message)
+                    }
+                }).finally(() => {
+                    //查询分页
+                    this.findPage();
+                    this.dialogFormVisibleAddRoles = false;
+                });
+            },
+
             toggleSelection(rows) {
                 if (rows) {
                     rows.forEach(row => {
@@ -323,7 +392,7 @@
                     }
                 }
                 console.log(val)
-                this.roleIds=this.multipleSelection;
+                this.roleIds = this.multipleSelection;
             },
 
             showMessage(res) {
@@ -342,9 +411,9 @@
                 //表单校验
                 this.$refs['dataEditForm'].validate((valid) => {
                     if (valid) {
-                        this.formData.birthday=this.birthday
+                        this.formData.birthday = this.birthday
                         //表单校验通过可以提交数据
-                        axios.post("/user/edit.do", this.formData).then((res) => {
+                        axios.post("/user/edit.do?roleIds=" + this.roleIds, this.formData).then((res) => {
                             if (res.data.flag) {
                                 //提交成功
                                 this.$message({
@@ -383,13 +452,13 @@
                     }
                 })
 
-                axios.get("/role/findAll.do").then((res)=>{
-                    if (res.data.flag){
-                        this.tableData=res.data.data;
+                axios.get("/role/findAll.do").then((res) => {
+                    if (res.data.flag) {
+                        this.tableData = res.data.data;
                     }
                     //回显已选角色
-                    axios.get("/role/findRoleIdsByUserId.do?userId="+row.id).then((res)=>{
-                        this.roleIds=res.data.data
+                    axios.get("/role/findRoleIdsByUserId.do?userId=" + row.id).then((res) => {
+                        this.roleIds = res.data.data
                     })
                 })
             },
@@ -398,9 +467,9 @@
             handleCreate() {
                 this.dialogFormVisible = true;
                 this.resetForm();
-                axios.get("/role/findAll.do").then((res)=>{
-                    if (res.data.flag){
-                        this.tableData=res.data.data;
+                axios.get("/role/findAll.do").then((res) => {
+                    if (res.data.flag) {
+                        this.tableData = res.data.data;
                     }
                 })
             },
@@ -411,9 +480,9 @@
                     if (valid) {
                         //关闭新增窗口
                         this.dialogFormVisible = false;
-                        this.formData.birthday=this.birthday;
+                        this.formData.birthday = this.birthday;
                         //表单通过校验，发送ajax请求,将数据发送到后台处理
-                        axios.post("/user/add.do?roleIds="+this.roleIds, this.formData)
+                        axios.post("/user/add.do?roleIds=" + this.roleIds, this.formData)
                             .then((res) => {
                                 if (res.data.flag) {
                                     //新增成功后，重新调用分页查询
@@ -461,8 +530,8 @@
             // 重置表单数据
             resetForm() {
                 this.formData = {};
-                this.birthday=null;
-                this.formData={}
+                this.birthday = null;
+                this.activeName = 'first'
             },
 
 

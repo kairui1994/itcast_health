@@ -88,12 +88,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void add(User user,int[] roleIds) {
+    public void add(User user,Integer[] roleIds) {
         user.setPassword(MD5Utils.passwordEncoder(user.getPassword()));
         userDao.add(user);
         Integer userId = user.getId();
 
-        for (int roleId : roleIds) {
+        for (Integer roleId : roleIds) {
             roleDao.addRoleByUserId(userId,roleId);
         }
 
@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void edit(User user) {
+    public void edit(Integer[] roleIds,User user) {
         String password = findById(user.getId()).getPassword();
         String editPassword = user.getPassword();
 
@@ -113,6 +113,13 @@ public class UserServiceImpl implements UserService {
             user.setPassword(MD5Utils.passwordEncoder(editPassword));
         }
         userDao.edit(user);
+
+        if (roleIds!=null&&roleIds.length>0){
+            userDao.deleteRoleByUseId(user.getId());
+            for (Integer roleId : roleIds) {
+                userDao.addRoleByUserId(user.getId(),roleId);
+            }
+        }
     }
 
     @Override
@@ -120,4 +127,15 @@ public class UserServiceImpl implements UserService {
         userDao.deleteRoleByUseId(userId);
         userDao.deleteById(userId);
     }
+
+    @Override
+    public void addRoleByUserId(Integer[] roleIds, Integer userId) {
+        if (roleIds!=null&&roleIds.length>0){
+            userDao.deleteRoleByUseId(userId);
+            for (Integer roleId : roleIds) {
+                userDao.addRoleByUserId(userId,roleId);
+            }
+        }
+    }
+
 }

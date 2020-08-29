@@ -27,7 +27,7 @@ public interface RoleDao {
 
     void deleteRole(Integer id);
 
-    void addRoleByUserId(@Param("userId") Integer userId, @Param("roleId") int roleId);
+    void addRoleByUserId(@Param("userId") Integer userId, @Param("roleId") Integer roleId);
 
     List<Integer> findRoleIdsByUserId(int userId);
 }
