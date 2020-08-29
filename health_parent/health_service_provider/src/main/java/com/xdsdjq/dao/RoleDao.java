@@ -1,7 +1,5 @@
 package com.xdsdjq.dao;
 
-
-import com.xdsdjq.pojo.Permission;
 import com.xdsdjq.pojo.Role;
 import org.apache.ibatis.annotations.Param;
 
@@ -30,4 +28,10 @@ public interface RoleDao {
     void addRoleByUserId(@Param("userId") Integer userId, @Param("roleId") Integer roleId);
 
     List<Integer> findRoleIdsByUserId(int userId);
+
+    void setRoleAndMenu(@Param("id") Integer id, @Param("menuId") Integer menuId);
+
+    List<Integer> findMenuByRoleId(Integer id);
+
+    void deleteRoleAndMenu(Integer id);
 }
