@@ -45,4 +45,8 @@
           and tr.id = trm.role_id
           and tr.id = #{id}
     </select>
+
+    <select id="selectByCondition" resultType="com.xdsdjq.pojo.Menu">
+        select * from  t_menu
+    </select>
 </mapper>
