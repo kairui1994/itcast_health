@@ -8,4 +8,5 @@ public interface MenuService {
     PageResult pageQuery(QueryPageBean queryPageBean);
 
     List<Menu> findAll();
+
 }
