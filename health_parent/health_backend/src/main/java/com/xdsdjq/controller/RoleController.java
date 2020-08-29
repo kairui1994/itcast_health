@@ -102,7 +102,6 @@ public class RoleController {
         }
     }
 
-
     @RequestMapping("/findRoleIdsByUserId")
     public Result findRoleIdsByUserId(Integer userId) {
         try {
@@ -116,6 +115,10 @@ public class RoleController {
 
     public void aa(){
         System.out.println("======");
+    }
+
+    public void bb(){
+        System.out.println("bbbbbbbbbbbbbbbbb");
     }
 
 
