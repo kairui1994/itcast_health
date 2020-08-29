@@ -110,8 +110,9 @@
                                     </el-row>
 
                                     <el-row>
+
                                         <el-col :span="12">
-                                            <el-form-item label="菜单路径">
+                                            <el-form-item label="菜单名称">
                                                 <el-input v-model="formData.name"/>
                                             </el-form-item>
                                         </el-col>
@@ -364,7 +365,7 @@
                 axios.get("/menu/findAll.do").then((res) => {
                     if (res.data.flag) {
                         //查询检查项数据成功
-                        this.tableData = res.data.data;
+                        this.menuList = res.data.data;
                     } else {
                         //查询检查项数据失败
                         this.$message.error(res.data.message);
