@@ -64,6 +64,7 @@
                 <el-table-column prop="id" label="菜单编码" align="center"></el-table-column>
                 <el-table-column prop="name" label="菜单名称" align="center"></el-table-column>
                 <el-table-column prop="linkUrl" label="菜单路径" align="center"></el-table-column>
+                <el-table-column prop="parentMenuId" label="父菜单ID" align="center"></el-table-column>
                 <el-table-column label="菜单等级" align="center">
                     <template slot-scope="scope">
                         <span>{{scope.row.level == '1' ? '一级菜单' : '二级菜单'}}</span>
@@ -100,12 +101,31 @@
                                                 <el-input v-model="formData.name"/>
                                             </el-form-item>
                                         </el-col>
+
+                                        <el-col :span="12">
+                                            <el-form-item label="菜单路径">
+                                                <el-input v-model="formData.name"/>
+                                            </el-form-item>
+                                        </el-col>
                                     </el-row>
 
                                     <el-row>
                                         <el-col :span="12">
-                                            <el-form-item label="名称">
+                                            <el-form-item label="菜单路径">
                                                 <el-input v-model="formData.name"/>
+                                            </el-form-item>
+                                        </el-col>
+
+                                        <el-col :span="12">
+                                            <el-form-item label="上级菜单" prop="parentMenuId">
+                                                <el-select v-model="formData.parentMenuId" placeholder="请选择上级菜单">
+                                                    <el-option
+                                                            v-for="item in menuList"
+                                                            :key="item.id"
+                                                            :label="item.name"
+                                                            :value="item.id">
+                                                    </el-option>
+                                                </el-select>
                                             </el-form-item>
                                         </el-col>
                                     </el-row>
@@ -120,15 +140,16 @@
                                 </el-form>
                             </el-tab-pane>
 
-                            <el-tab-pane label="检查项信息" name="second">
+                            <el-tab-pane label="角色信息" name="second">
                                 <div class="checkScrol">
                                     <table class="datatable">
                                         <thead>
                                         <tr>
                                             <th>选择</th>
-                                            <th>项目编码</th>
-                                            <th>项目名称</th>
-                                            <th>项目说明</th>
+                                            <th>角色ID</th>
+                                            <th>角色名称</th>
+                                            <th>角色关键字</th>
+                                            <th>角色描述</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -138,6 +159,7 @@
                                             </td>
                                             <td><label :for="c.id">{{c.id}}</label></td>
                                             <td><label :for="c.id">{{c.name}}</label></td>
+                                            <td><label :for="c.id">{{c.keyword}}</label></td>
                                             <td><label :for="c.id">{{c.description}}</label></td>
                                         </tr>
                                         </tbody>
@@ -252,6 +274,9 @@
                 total: 100,
                 queryString: null,
             },
+
+            menuList:[],//菜单列表数据
+
             dataList: [],//列表数据
             formData: {},//表单数据
             tableData: [],//新增和编辑表单中对应的检查项列表数据
@@ -285,7 +310,7 @@
             //添加
             handleAdd() {
                 //alert(this.checkitemIds)
-                axios.post("/checkGroup/add.do?checkItemIds=" + this.checkitemIds, this.formData)
+                axios.post("/menu/add.do?checkItemIds=" + this.checkitemIds, this.formData)
                     .then((res) => {
                         this.dialogFormVisible = false;
                         if (res.data.flag) {
@@ -303,6 +328,7 @@
                     this.findPage();
                 })
             },
+
             findMatchPage() {
                 this.pagination.currentPage = 1;
                 this.findPage();
@@ -324,18 +350,18 @@
             },
             // 重置表单
             resetForm() {
-                this.formData = {}
+                this.formData = {};
+                this.menuList=[];
+                this.activeName = 'first';//默认选中first对应的tab
+                this.checkitemIds = [];//重置复选框
             },
 
             // 弹出添加窗口
             handleCreate() {
                 this.resetForm();
                 this.dialogFormVisible = true;
-
-                this.activeName = 'first';//默认选中first对应的tab
-                this.checkitemIds = [];//重置复选框
                 //发送ajax请求，查询所有的检查项信息，转为json，赋值给tableData
-                axios.get("/checkItem/findAll.do").then((res) => {
+                axios.get("/menu/findAll.do").then((res) => {
                     if (res.data.flag) {
                         //查询检查项数据成功
                         this.tableData = res.data.data;
