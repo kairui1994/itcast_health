@@ -27,7 +27,7 @@
     <!--新增会员-->
     <insert id="add" parameterType="com.xdsdjq.pojo.Member">
         <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
-            SELECT LAST_INSERT_ID()
+            select LAST_INSERT_ID()
         </selectKey>
         insert into t_member
                 (fileNumber, name, sex, idCard, phoneNumber,
@@ -113,5 +113,8 @@
     <select id="findMemberTotalCount" resultType="int">
         select count(id)
         from t_member
+    </select>
+    <select id="getById" resultType="java.lang.String" parameterType="String">
+        select id from t_member where phoneNumber = #{telephone}
     </select>
 </mapper>

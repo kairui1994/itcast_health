@@ -120,5 +120,14 @@ public class SetMealController {
         }
     }
 
-
+    @RequestMapping("/findAll")
+    public Result findAll(){
+        try {
+            List<SetMeal> all = setMealService.findAll();
+            return new Result(true,MessageConstant.QUERY_SETMEALLIST_SUCCESS,all);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.QUERY_SETMEALLIST_FAIL);
+        }
+    }
 }

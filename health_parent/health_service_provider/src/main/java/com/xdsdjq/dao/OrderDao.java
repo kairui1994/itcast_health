@@ -22,4 +22,12 @@ public interface OrderDao {
     Integer findVisitsOrderCountAfterDate(String date);
 
     List<Map> findHotSetMeal();
+
+    Order findById(Integer orderId);
+
+    void changeStatus(Order order);
+
+    void deleteAll(int orderId);
+
+    String findByStatus(Integer orderId);
 }

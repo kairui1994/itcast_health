@@ -69,6 +69,12 @@ public class SetMealServiceImpl implements SetMealService {
         return setMealDao.findSetMealCount();
     }
 
+    @Override
+    public List<SetMeal> findAll() {
+        return setMealDao.findAll();
+    }
+
+
     //分页查询
     public PageResult findPage(QueryPageBean queryPageBean) {
         Integer currentPage = queryPageBean.getCurrentPage();

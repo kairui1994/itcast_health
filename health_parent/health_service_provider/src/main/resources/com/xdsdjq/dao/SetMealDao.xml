@@ -198,4 +198,8 @@
         where o.setmeal_id = s.id
         group by s.name
     </select>
+
+    <select id="findAll" resultType="com.xdsdjq.pojo.SetMeal" parameterType="list">
+        select * from t_setmeal
+    </select>
 </mapper>

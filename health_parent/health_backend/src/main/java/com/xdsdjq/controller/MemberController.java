@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RequestMapping("/member")
 @RestController
 public class MemberController {
@@ -55,6 +57,16 @@ public class MemberController {
         }catch (Exception e){
             e.printStackTrace();
             return new Result(false,MessageConstant.ADD_MEMBER_FAIL);
+        }
+    }
+    @RequestMapping("/changeStatus")
+    public Result changeStatus(@RequestBody Map map){
+        try {
+            memberService.changeStatus(map);
+            return new Result(true,MessageConstant.EDIT_FAIL);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new Result(false,MessageConstant.EDIT_SUCCESS);
         }
     }
 }

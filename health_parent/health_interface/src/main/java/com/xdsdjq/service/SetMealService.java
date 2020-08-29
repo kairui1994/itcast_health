@@ -24,4 +24,5 @@ public interface SetMealService {
 
     List<Map<String, Object>> findSetMealCount();
 
+    List<SetMeal> findAll();
 }
