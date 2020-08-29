@@ -80,15 +80,16 @@
             <template>
                 <el-tabs v-model = "activeName" type = "card">
                     <el-tab-pane label = "基本信息" name = "first">
-                        <el-form label-position = "right" label-width = "100px">
+                        <el-form ref = "dataAddForm" :model = "formData" :rules = "rules" label-position = "right"
+                                 label-width = "100px">
                             <el-row>
                                 <el-col :span = "12">
-                                    <el-form-item label = "名称">
+                                    <el-form-item label = "名称" prop = "name">
                                         <el-input v-model = "formData.name"/>
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span = "12">
-                                    <el-form-item label = "角色关键字">
+                                    <el-form-item label = "角色关键字" prop = "keyword">
                                         <el-input v-model = "formData.keyword"/>
                                     </el-form-item>
                                 </el-col>
@@ -143,15 +144,16 @@
             <template>
                 <el-tabs v-model = "activeName" type = "card">
                     <el-tab-pane label = "基本信息" name = "first">
-                        <el-form label-position = "right" label-width = "100px">
+                        <el-form ref = "dataEditForm" :model = "formData" :rules = "rules" label-position = "right"
+                                 label-width = "100px">
                             <el-row>
                                 <el-col :span = "12">
-                                    <el-form-item label = "名称">
+                                    <el-form-item label = "名称" prop = "name">
                                         <el-input v-model = "formData.name"/>
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span = "12">
-                                    <el-form-item label = "角色关键字">
+                                    <el-form-item label = "角色关键字" prop = "keyword">
                                         <el-input v-model = "formData.keyword"/>
                                     </el-form-item>
                                 </el-col>
@@ -253,6 +255,10 @@
             dialogFormVisible: false,//控制添加窗口显示/隐藏
             dialogFormVisible4Edit: false,//控制编辑窗口显示/隐藏
             dialogFormVisibleAdd: false,//控制添加权限窗口显示/隐藏
+            rules: {//校验规则
+                name: [{required: true, message: '角色名称为必填项', trigger: 'blur'}],
+                keyword: [{required: true, message: '角色关键字为必填项', trigger: 'blur'}]
+            }
         },
         created() {
             this.findAll();
@@ -277,20 +283,29 @@
 
             //编辑
             handleEdit() {
-                //关闭编辑窗口
-                this.dialogFormVisible4Edit = false;
-                axios.post("/role/edit.do?permissionIds=" + this.permissionIds, this.formData)
-                     .then((res) => {
-                         if (res.data.flag) {
-                             this.$message({
-                                 type: 'success',
-                                 message: res.data.message
-                             });
-                             this.findAll();
-                         } else {
-                             this.$message.error((res.data.message))
-                         }
-                     })
+                //表单校验
+                this.$refs['dataEditForm'].validate((valid) => {
+                    if (valid) {
+                        //关闭编辑窗口
+                        this.dialogFormVisible4Edit = false;
+                        axios.post("/role/edit.do?permissionIds=" + this.permissionIds, this.formData)
+                             .then((res) => {
+                                 if (res.data.flag) {
+                                     this.$message({
+                                         type: 'success',
+                                         message: res.data.message
+                                     });
+                                     this.findAll();
+                                 } else {
+                                     this.$message.error((res.data.message))
+                                 }
+                             })
+                    } else {
+                        //检验不通过
+                        this.$message.error("表单数据校验失败!");
+                        return false;
+                    }
+                });
             },
             //添加
             handleAdd() {
@@ -368,16 +383,24 @@
 
             // 添加权限
             intoPermission() {
-                this.dialogFormVisibleAdd = false;
-                axios.post("/role/addPermission.do?permissionIds=" + this.permissionIds + "&id=" + this.roleId).then((res) => {
-                    if (res.data.flag) {
-                        this.$message({
-                            type: 'success',
-                            message: res.data.message
+                this.$refs['dataAddForm'].validate((valid) => {
+                    if (valid) {
+                        this.dialogFormVisibleAdd = false;
+                        axios.post("/role/addPermission.do?permissionIds=" + this.permissionIds + "&id=" + this.roleId).then((res) => {
+                            if (res.data.flag) {
+                                this.$message({
+                                    type: 'success',
+                                    message: res.data.message
+                                });
+                                this.findAll();
+                            } else {
+                                this.$message.error((res.data.message))
+                            }
                         });
-                        this.findAll();
                     } else {
-                        this.$message.error((res.data.message))
+                        //校验失败
+                        this.$message.error("校验数据失败，请检查你输入的数据是否正确");
+                        return false;
                     }
                 });
             },
