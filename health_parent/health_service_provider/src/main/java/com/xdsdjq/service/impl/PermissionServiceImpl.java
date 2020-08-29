@@ -38,10 +38,10 @@ public class PermissionServiceImpl implements PermissionService {
         List<Permission> rows = page.getResult();
         return new PageResult(total, rows);
     }
+
     @Override
     public void add(Permission permission) throws Exception {
         Date date = new Date();
-        permission.setCreationdate(DateUtils.parseDate2String(date));
         permissionDao.add(permission);
     }
 
