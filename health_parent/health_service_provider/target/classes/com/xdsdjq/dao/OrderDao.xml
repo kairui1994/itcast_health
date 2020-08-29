@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdsdjq.dao.OrderDao">
+    <!--修改到诊状态-->
+    <update id="changeStatus" parameterType="com.xdsdjq.pojo.Order">
+        update t_order set orderStatus = #{orderStatus} where id = #{id}
+    </update>
+
+    <delete id="deleteAll" parameterType="int">
+        delete
+        from t_order
+        where id = #{id}
+    </delete>
+
+    <select id="findByCondition" parameterType="com.xdsdjq.pojo.Order" resultType="com.xdsdjq.pojo.Order">
+        select *
+        from t_order
+        where member_id = #{memberId}
+          and orderDate = #{orderDate}
+          and setmeal_id = #{setmealId}
+    </select>
+
+    <insert id="add" parameterType="com.xdsdjq.pojo.Order">
+        <selectKey resultType="integer" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into t_order(member_id, orderDate, orderType, orderStatus, setmeal_id)
+        values (#{memberId}, #{orderDate}, #{orderType}, #{orderStatus}, #{setmealId})
+    </insert>
+
+    <select id="findById4Detail" parameterType="integer" resultType="java.util.Map">
+        select m.name member, s.name setmeal, o.orderDate orderDate, o.orderType orderType
+        from t_order o,
+             t_member m,
+             t_setmeal s
+        where o.member_id = m.id
+          and o.setmeal_id = s.id
+          and o.id = #{id}
+    </select>
+
+    <!--根据日期查询预约数-->
+    <select id="findOrderCountByDate" parameterType="string" resultType="java.lang.Integer">
+        select count(id)
+        from t_order
+        where orderDate = #{date}
+    </select>
+
+    <!--根据日期查询就诊数-->
+    <select id="findVisitsCountByDate" parameterType="string" resultType="java.lang.Integer">
+        select count(id)
+        from t_order
+        where orderStatus = '已到诊'
+          and orderDate = #{date}
+    </select>
+
+    <!--根据日期统计预约数，统计指定日期之后的预约数-->
+    <select id="findOrderCountAfterDate" parameterType="string" resultType="java.lang.Integer">
+        select count(id)
+        from t_order
+        where orderDate &gt;= #{date}
+    </select>
+
+    <!--根据日期统计就诊数，统计指定日期之后的就诊数-->
+    <select id="findVisitsOrderCountAfterDate" parameterType="string" resultType="java.lang.Integer">
+        select count(id)
+        from t_order
+        where orderDate &gt;= #{date}
+          and orderStatus = '已到诊'
+    </select>
+
+    <!--热门套餐，查询前4条-->
+    <select id="findHotSetMeal" resultType="java.util.Map">
+        select s.name,
+               count(o.id)                                   as setmeal_count,
+               count(o.id) / (select count(id) from t_order) as proportion
+        from t_order o
+                     inner join t_setmeal s on s.id = o.setmeal_id
+        group by o.setmeal_id
+        order by setmeal_count desc
+        limit 0,4
+    </select>
+
+
+    <select id="findById" resultType="com.xdsdjq.pojo.Order" parameterType="int">
+        select * from t_order where id = #{id}
+    </select>
+
+    <select id="findByStatus" resultType="java.lang.String" parameterType="int">
+        SELECT orderStatus FROM t_order WHERE id = #{orderId}
+    </select>
+</mapper>

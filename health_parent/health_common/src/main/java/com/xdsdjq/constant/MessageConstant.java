@@ -27,8 +27,10 @@ public class MessageConstant {
     public static final String ADD_SETMEAL_SUCCESS = "新增套餐成功";
     public static final String IMPORT_ORDERSETTING_FAIL = "批量导入预约设置数据失败";
     public static final String IMPORT_ORDERSETTING_SUCCESS = "批量导入预约设置数据成功";
-    public static final String GET_ORDERSETTING_SUCCESS = "获取预约设置数据成功";
-    public static final String GET_ORDERSETTING_FAIL = "获取预约设置数据失败";
+    public static final String ADD_ORDERSETTING_SUCCESS = "预约列表添加成功";
+    public static final String ADD_ORDERSETTING_FAIL = "预约列表添加失败";
+    public static final String DELETE_ORDERSETTING_SUCCESS = "获取预约设置数据成功";
+    public static final String DELETE_ORDERSETTING_FAIL = "获取预约设置数据失败";
     public static final String ORDERSETTING_SUCCESS = "预约设置成功";
     public static final String ORDERSETTING_FAIL = "预约设置失败";
     public static final String ADD_MEMBER_FAIL = "新增会员失败";
@@ -53,6 +55,8 @@ public class MessageConstant {
     public static final String HAS_ORDERED = "已经完成预约，不能重复预约";
     public static final String ORDER_SUCCESS = "预约成功";
     public static final String ORDER_FAIL = "预约失败";
+    public static final String DELETE_ORDER_SUCCESS = "取消预约成功";
+    public static final String DELETE_ORDER_FAIL = "取消预约失败";
     public static final String GET_USERNAME_SUCCESS = "获取当前登录用户名称成功";
     public static final String GET_USERNAME_FAIL = "获取当前登录用户名称失败";
     public static final String GET_MENU_SUCCESS = "获取当前登录用户菜单成功";
@@ -67,6 +71,8 @@ public class MessageConstant {
     public static final String GET_SETMEAL_LIST_FAIL = "查询套餐列表数据失败";
 
 
+    public static final String EDIT_SUCCESS = "修改成功";
+    public static final String EDIT_FAIL = "修改成功";
     public static final String EDIT_SETMEAL_FAIL = "修改套餐失败";
     public static final String EDIT_SETMEAL_SUCCESS = "修改套餐成功";
     public static final String DELETE_SETMEAL_FAIL = "删除套餐失败";
@@ -103,4 +109,6 @@ public class MessageConstant {
 
     public static final String GRANT_ROLE_SUCCESS = "授予角色成功";
     public static final String GRANT_ROLE_FAIL = "授予角色失败";
+    public static final String DELETE_ORDERS_FAIL = "批量删除预约失败";
+    public static final String DELETE_ORDERS_SUCCESS = "批量删除预约成功";
 }

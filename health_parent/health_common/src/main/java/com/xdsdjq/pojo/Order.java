@@ -1,5 +1,7 @@
 package com.xdsdjq.pojo;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,6 +15,7 @@ public class Order implements Serializable{
     public static final String ORDERSTATUS_NO = "未到诊";
     private Integer id;
     private Integer memberId;//会员id
+    @JSONField(format = "yyyy-MM-dd")
     private Date orderDate;//预约日期
     private String orderType;//预约类型 电话预约/微信预约
     private String orderStatus;//预约状态（是否到诊）
