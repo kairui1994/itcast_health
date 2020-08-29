@@ -100,4 +100,7 @@ public class MessageConstant {
     public static final String EDIT_PERMISSION_SUCCESS = "编辑权限信息成功";
     public static final String DELETE_PERMISSION_FAIL = "删除权限信息失败";
     public static final String DELETE_PERMISSION_SUCCESS = "删除权限信息成功";
+
+    public static final String GRANT_ROLE_SUCCESS = "授予角色成功";
+    public static final String GRANT_ROLE_FAIL = "授予角色失败";
 }

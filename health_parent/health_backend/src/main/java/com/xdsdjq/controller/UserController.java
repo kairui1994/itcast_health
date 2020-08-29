@@ -116,4 +116,17 @@ public class UserController {
             return new Result(flag, "登录失败，请检查用户名和密码！");
         }
     }
+
+    @RequestMapping("/addRoleByUserId")
+    public Result addRoleByUserId(Integer[] roleIds,Integer userId){
+        try {
+            userService.addRoleByUserId(roleIds,userId);
+            return new Result(true,MessageConstant.GRANT_ROLE_SUCCESS);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new Result(false,MessageConstant.GRANT_ROLE_FAIL);
+        }
+
+
+    }
 }

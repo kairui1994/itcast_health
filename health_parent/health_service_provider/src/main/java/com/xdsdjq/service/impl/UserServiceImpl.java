@@ -128,4 +128,14 @@ public class UserServiceImpl implements UserService {
         userDao.deleteById(userId);
     }
 
+    @Override
+    public void addRoleByUserId(Integer[] roleIds, Integer userId) {
+        if (roleIds!=null&&roleIds.length>0){
+            userDao.deleteRoleByUseId(userId);
+            for (Integer roleId : roleIds) {
+                userDao.addRoleByUserId(userId,roleId);
+            }
+        }
+    }
+
 }

@@ -21,4 +21,5 @@ public interface UserService {
 
     void deleteById(Integer userId);
 
+    void addRoleByUserId(Integer[] roleIds, Integer userId);
 }
