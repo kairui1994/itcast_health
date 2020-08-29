@@ -40,8 +40,6 @@ public class PermissionServiceImpl implements PermissionService {
     }
     @Override
     public void add(Permission permission) throws Exception {
-        Date date = new Date();
-        permission.setCreationdate(DateUtils.parseDate2String(date));
         permissionDao.add(permission);
     }
 
