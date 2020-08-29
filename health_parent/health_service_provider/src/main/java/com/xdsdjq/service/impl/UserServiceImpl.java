@@ -3,6 +3,7 @@ package com.xdsdjq.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xdsdjq.dao.RoleDao;
 import com.xdsdjq.dao.UserDao;
 import com.xdsdjq.entity.PageResult;
 import com.xdsdjq.entity.QueryPageBean;
@@ -22,6 +23,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private RoleDao roleDao;
 
     public User findByUsername(String username) {
         User user = userDao.findByUsername(username);
@@ -84,9 +88,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void add(User user) {
+    public void add(User user,Integer[] roleIds) {
         user.setPassword(MD5Utils.passwordEncoder(user.getPassword()));
         userDao.add(user);
+        Integer userId = user.getId();
+
+        for (Integer roleId : roleIds) {
+            roleDao.addRoleByUserId(userId,roleId);
+        }
+
     }
 
     @Override
@@ -95,7 +105,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void edit(User user) {
+    public void edit(Integer[] roleIds,User user) {
         String password = findById(user.getId()).getPassword();
         String editPassword = user.getPassword();
 
@@ -103,10 +113,29 @@ public class UserServiceImpl implements UserService {
             user.setPassword(MD5Utils.passwordEncoder(editPassword));
         }
         userDao.edit(user);
+
+        if (roleIds!=null&&roleIds.length>0){
+            userDao.deleteRoleByUseId(user.getId());
+            for (Integer roleId : roleIds) {
+                userDao.addRoleByUserId(user.getId(),roleId);
+            }
+        }
     }
 
     @Override
-    public void deleteById(Integer id) {
-        userDao.deleteById(id);
+    public void deleteById(Integer userId) {
+        userDao.deleteRoleByUseId(userId);
+        userDao.deleteById(userId);
     }
+
+    @Override
+    public void addRoleByUserId(Integer[] roleIds, Integer userId) {
+        if (roleIds!=null&&roleIds.length>0){
+            userDao.deleteRoleByUseId(userId);
+            for (Integer roleId : roleIds) {
+                userDao.addRoleByUserId(userId,roleId);
+            }
+        }
+    }
+
 }

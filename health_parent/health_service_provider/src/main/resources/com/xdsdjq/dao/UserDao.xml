@@ -41,6 +41,9 @@
     </select>
 
     <insert id="add" parameterType="com.xdsdjq.pojo.User">
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            select last_insert_id()
+        </selectKey>
         insert into t_user(birthday, gender, username, password, remark, station, telephone)
         values (#{birthday}, #{gender}, #{username}, #{password}, #{remark}, #{station}, #{telephone})
     </insert>
@@ -85,4 +88,15 @@
         from t_user
         where id = #{id}
     </delete>
+
+    <delete id="deleteRoleByUseId" parameterType="integer">
+        delete
+        from t_user_role
+        where user_id = #{userId}
+    </delete>
+
+    <insert id="addRoleByUserId">
+        insert into t_user_role(user_id, role_id)
+        values (#{userId}, #{roleId})
+    </insert>
 </mapper>

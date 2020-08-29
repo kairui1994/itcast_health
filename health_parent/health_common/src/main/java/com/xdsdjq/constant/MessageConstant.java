@@ -82,4 +82,25 @@ public class MessageConstant {
     public static final String DELETE_USER_SUCCESS = "删除用户成功";
     public static final String QUERY_MEMBER_SUCCESS = "查询会员信息成功";
     public static final String QUERY_MEMBER_FAIL = "查询会员信息失败";
+
+    public static final String QUERY_ROLE_FAIL = "查询角色信息失败";
+    public static final String QUERY_ROLE_SUCCESS = "查询角色信息成功";
+    public static final String ADD_ROLE_FAIL = "新增角色信息失败";
+    public static final String ADD_ROLE_SUCCESS = "新增角色信息成功";
+    public static final String EDIT_ROLE_FAIL = "编辑角色信息失败";
+    public static final String EDIT_ROLE_SUCCESS = "编辑角色信息成功";
+    public static final String DELETE_ROLE_FAIL = "删除角色信息失败";
+    public static final String DELETE_ROLE_SUCCESS = "删除角色信息成功";
+
+    public static final String QUERY_PERMISSION_FAIL = "查询权限信息失败";
+    public static final String QUERY_PERMISSION_SUCCESS = "查询权限信息成功";
+    public static final String ADD_PERMISSION_FAIL = "添加权限信息失败";
+    public static final String ADD_PERMISSION_SUCCESS = "添加权限信息成功";
+    public static final String EDIT_PERMISSION_FAIL = "编辑权限信息失败";
+    public static final String EDIT_PERMISSION_SUCCESS = "编辑权限信息成功";
+    public static final String DELETE_PERMISSION_FAIL = "删除权限信息失败";
+    public static final String DELETE_PERMISSION_SUCCESS = "删除权限信息成功";
+
+    public static final String GRANT_ROLE_SUCCESS = "授予角色成功";
+    public static final String GRANT_ROLE_FAIL = "授予角色失败";
 }

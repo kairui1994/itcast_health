@@ -44,4 +44,65 @@
         from t_role
         where id = #{id}
     </select>
+
+    <select id="findAll" resultType="com.xdsdjq.pojo.Role">
+        select *
+        from t_role
+    </select>
+
+    <insert id="add" parameterType="com.xdsdjq.pojo.Role">
+        <selectKey resultType="integer" keyProperty="id" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+        INSERT into t_role(name, keyword, description)
+        values (#{name}, #{keyword}, #{description})
+    </insert>
+
+    <update id="setRoleAndPermission" parameterType="int">
+        insert into t_role_permission(role_id, permission_id)
+        VALUES (#{id}, #{permissionId})
+    </update>
+
+    <select id="findById" resultType="com.xdsdjq.pojo.Role" parameterType="int">
+        select *
+        from t_role
+        where id = #{id}
+    </select>
+
+    <select id="findPermissionByRoleId" resultType="int" parameterType="int">
+        select permission_id
+        from t_role_permission
+        where role_id = #{id}
+    </select>
+
+    <update id="edit" parameterType="com.xdsdjq.pojo.Role">
+        update t_role
+        set name=#{name},
+            keyword=#{keyword},
+            description=#{description}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRoleAndPermission" parameterType="int">
+        delete
+        from t_role_permission
+        where role_id = #{id}
+    </delete>
+
+    <delete id="deleteRole" parameterType="int">
+        delete
+        from t_role
+        where id = #{id}
+    </delete>
+
+    <insert id="addRoleByUserId" parameterType="integer">
+        insert into t_user_role(user_id, role_id)
+        values (#{userId}, #{roleId})
+    </insert>
+
+    <select id="findRoleIdsByUserId" resultType="integer">
+        select role_id
+        from t_user_role
+        where user_id = #{userId}
+    </select>
 </mapper>

@@ -139,6 +139,7 @@
                                     </el-row>
                                 </el-form>
                             </el-tab-pane>
+
                             <el-tab-pane label="检查项信息" name="second">
                                 <div class="checkScrol">
                                     <table class="datatable">
@@ -334,7 +335,7 @@
                     currentPage: this.pagination.currentPage,
                     pageSize: this.pagination.pageSize,
                     queryString: this.pagination.queryString
-                }
+                };
                 axios.post("/checkGroup/findPage.do", param).then((res) => {
                     this.dataList = res.data.rows;
                     this.pagination.total = res.data.total;
