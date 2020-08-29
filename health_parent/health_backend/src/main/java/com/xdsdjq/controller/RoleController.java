@@ -112,20 +112,4 @@ public class RoleController {
             return new Result(false, MessageConstant.QUERY_ROLE_FAIL);
         }
     }
-
-    public void aa() {
-        System.out.println("======");
-    }
-
-    public void bb() {
-        System.out.println("bbbbbbbbbbbbbbbbb");
-    }
-
-    public void ccc() {
-        System.out.println("ccccccc");
-    }
-
-    public void ddd() {
-        System.out.println("=====");
-    }
 }
