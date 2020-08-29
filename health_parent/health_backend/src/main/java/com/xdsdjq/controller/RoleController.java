@@ -118,6 +118,9 @@ public class RoleController {
         System.out.println("======");
     }
 
+    public void bb(){
+        System.out.println("bbbbbbbbbbbbbbbbb");
+    }
 
 
 }
