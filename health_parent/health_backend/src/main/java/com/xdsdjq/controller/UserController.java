@@ -8,6 +8,7 @@ import com.xdsdjq.entity.Result;
 import com.xdsdjq.pojo.User;
 import com.xdsdjq.service.RoleService;
 import com.xdsdjq.service.UserService;
+import org.junit.Test;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -127,6 +128,13 @@ public class UserController {
             return new Result(false,MessageConstant.GRANT_ROLE_FAIL);
         }
 
+    }
 
+    @Test
+    public void Test(){
+        System.out.println("测试111");
+        System.out.println("测试222");
+        System.out.println("测试333");
+        System.out.println("测试444");
     }
 }
