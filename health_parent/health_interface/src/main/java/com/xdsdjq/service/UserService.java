@@ -13,11 +13,12 @@ public interface UserService {
 
     PageResult pageQuery(QueryPageBean queryPageBean);
 
-    void add(User user,int[] roleIds);
+    void add(User user,Integer[] roleIds);
 
     User findById(Integer id);
 
-    void edit(User user);
+    void edit(Integer[] roleIds,User user);
 
     void deleteById(Integer userId);
+
 }

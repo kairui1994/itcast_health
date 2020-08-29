@@ -6,6 +6,7 @@ import com.xdsdjq.entity.PageResult;
 import com.xdsdjq.entity.QueryPageBean;
 import com.xdsdjq.entity.Result;
 import com.xdsdjq.pojo.User;
+import com.xdsdjq.service.RoleService;
 import com.xdsdjq.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,9 @@ import java.util.*;
 public class UserController {
     @Reference
     private UserService userService;
+
+    @Reference
+    private RoleService roleService;
 
     @RequestMapping("/getUsername")
     public Result getUsername() throws Exception {
@@ -57,10 +61,9 @@ public class UserController {
     }
 
     @RequestMapping("/add")
-    public Result add(int[] roleIds,@RequestBody User user) {
+    public Result add(Integer[] roleIds, @RequestBody User user) {
         try {
-            System.out.println(roleIds);
-            userService.add(user,roleIds);
+            userService.add(user, roleIds);
             return new Result(true, MessageConstant.ADD_USER_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,45 +75,45 @@ public class UserController {
     public Result findById(Integer id) {
         try {
             User user = userService.findById(id);
-            return new Result(true,MessageConstant.GET_USER_SUCCESS,user);
+            return new Result(true, MessageConstant.GET_USER_SUCCESS, user);
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(false,MessageConstant.GET_USER_FAIL);
+            return new Result(false, MessageConstant.GET_USER_FAIL);
         }
     }
 
     @RequestMapping("/edit")
-    public Result edit(@RequestBody User user){
+    public Result edit(Integer[] roleIds,@RequestBody User user) {
         try {
-            userService.edit(user);
-            return new Result(true,MessageConstant.EDIT_USER_SUCCESS);
+            userService.edit(roleIds,user);
+            return new Result(true, MessageConstant.EDIT_USER_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(false,MessageConstant.EDIT_USER_FAIL);
+            return new Result(false, MessageConstant.EDIT_USER_FAIL);
         }
     }
 
     @RequestMapping("/delete")
-    public Result delete(Integer id){
+    public Result delete(Integer id) {
         try {
             userService.deleteById(id);
-            return new Result(true,MessageConstant.DELETE_USER_SUCCESS);
-        }catch (Exception e){
+            return new Result(true, MessageConstant.DELETE_USER_SUCCESS);
+        } catch (Exception e) {
             e.printStackTrace();
-            return new Result(false,MessageConstant.DELETE_USER_FAIL);
+            return new Result(false, MessageConstant.DELETE_USER_FAIL);
         }
     }
 
     @RequestMapping("/getLoginStatus")
-    public Result getLoginStatus(HttpServletRequest request, HttpServletResponse response){
+    public Result getLoginStatus(HttpServletRequest request, HttpServletResponse response) {
 
         Boolean flag = (Boolean) request.getSession().getAttribute("result");
 
         request.getSession().removeAttribute("result");
-        if (flag){
-            return new Result(true,"登录成功！");
-        }else {
-            return new Result(flag,"登录失败，请检查用户名和密码！");
+        if (flag) {
+            return new Result(true, "登录成功！");
+        } else {
+            return new Result(flag, "登录失败，请检查用户名和密码！");
         }
     }
 }
