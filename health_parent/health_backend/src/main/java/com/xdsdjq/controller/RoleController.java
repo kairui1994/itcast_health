@@ -101,4 +101,23 @@ public class RoleController {
             return new Result(false, MessageConstant.ADD_PERMISSION_FAIL);
         }
     }
+
+
+    @RequestMapping("/findRoleIdsByUserId")
+    public Result findRoleIdsByUserId(Integer userId) {
+        try {
+            List<Integer> roles = roleService.findRoleIdsByUserId(userId);
+            return new Result(true, MessageConstant.QUERY_ROLE_SUCCESS, roles);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.QUERY_ROLE_FAIL);
+        }
+    }
+
+    public void aa(){
+        System.out.println("======");
+    }
+
+
+
 }
