@@ -25,7 +25,7 @@ public class MenuServiceImpl implements MenuService {
         return menuDao.findMenuById(id);
     }
 
-    @Override
+
     public PageResult pageQuery(QueryPageBean queryPageBean) {
         Integer currentPage = queryPageBean.getCurrentPage();
         Integer pageSize = queryPageBean.getPageSize();
@@ -41,5 +41,10 @@ public class MenuServiceImpl implements MenuService {
         long total = page.getTotal();
         List data = page.getList();
         return new PageResult(total,data);
+    }
+
+    @Override
+    public List<Menu> findAll() {
+        return menuDao.findAll();
     }
 }
