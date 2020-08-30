@@ -29,7 +29,6 @@ public class RoleController {
             return new Result(false, MessageConstant.QUERY_ROLE_FAIL);
         }
     }
-
     @RequestMapping("/add")
     @PreAuthorize("hasAuthority('ROLE_ADD')")
     public Result add(@RequestBody Role role, Integer[] permissionIds,Integer[] menuIds) {
