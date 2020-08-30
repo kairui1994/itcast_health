@@ -105,7 +105,7 @@
                         
                         </el-form>
                     </el-tab-pane>
-
+                    
                     <el-tab-pane label = "权限信息" name = "second">
                         <div class = "checkScrol">
                             <table class = "datatable">
@@ -124,6 +124,35 @@
                                     <td><label :for = "c.id">{{c.description}}</label></td>
                                     <td>
                                         <input :id = "c.id" v-model = "permissionIds" type = "checkbox" :value = "c.id">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </el-tab-pane>
+                    
+                    <el-tab-pane label = "菜单信息" name = "four">
+                        <div class = "checkScrol">
+                            <table class = "datatable">
+                                <thead>
+                                <tr>
+                                    <th>菜单名称</th>
+                                    <th>访问路径</th>
+                                    <th>优先级</th>
+                                    <th>描述</th>
+                                    <th>等级</th>
+                                    <th>选择</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for = "c in menuData">
+                                    <td><label :for = "c.id">{{c.name}}</label></td>
+                                    <td><label :for = "c.id">{{c.linkUrl}}</label></td>
+                                    <td><label :for = "c.id">{{c.priority}}</label></td>
+                                    <td><label :for = "c.id">{{c.description}}</label></td>
+                                    <td><label :for = "c.id">{{c.level}}</label></td>
+                                    <td>
+                                        <input :id = "c.id" v-model = "menuIds" type = "checkbox" :value = "c.id">
                                     </td>
                                 </tr>
                                 </tbody>
@@ -194,6 +223,35 @@
                             </table>
                         </div>
                     </el-tab-pane>
+                    
+                    <el-tab-pane label = "菜单信息" name = "four">
+                        <div class = "checkScrol">
+                            <table class = "datatable">
+                                <thead>
+                                <tr>
+                                    <th>菜单名称</th>
+                                    <th>访问路径</th>
+                                    <th>优先级</th>
+                                    <th>描述</th>
+                                    <th>等级</th>
+                                    <th>选择</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for = "c in menuData">
+                                    <td><label :for = "c.id">{{c.name}}</label></td>
+                                    <td><label :for = "c.id">{{c.linkUrl}}</label></td>
+                                    <td><label :for = "c.id">{{c.priority}}</label></td>
+                                    <td><label :for = "c.id">{{c.description}}</label></td>
+                                    <td><label :for = "c.id">{{c.level}}</label></td>
+                                    <td>
+                                        <input :id = "c.id" v-model = "menuIds" type = "checkbox" :value = "c.id">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </el-tab-pane>
                 </el-tabs>
             </template>
             <div slot = "footer" class = "dialog-footer">
@@ -252,7 +310,9 @@
             dataList: [],//列表数据
             formData: {},//表单数据
             tableData: [],//新增和编辑表单中对应的检查项列表数据
+            menuData: [],//新增和编辑表单中对应的菜单列表数据
             permissionIds: [],//新增和编辑表单中检查项对应的复选框，基于双向绑定可以进行回显和数据提交
+            menuIds: [],// 新增和编辑表单中菜单对应的复选框
             dialogFormVisible: false,//控制添加窗口显示/隐藏
             dialogFormVisible4Edit: false,//控制编辑窗口显示/隐藏
             dialogFormVisibleAdd: false,//控制添加权限窗口显示/隐藏
@@ -289,7 +349,7 @@
                     if (valid) {
                         //关闭编辑窗口
                         this.dialogFormVisible4Edit = false;
-                        axios.post("/role/edit.do?permissionIds=" + this.permissionIds, this.formData)
+                        axios.post("/role/edit.do?permissionIds=" + this.permissionIds+"&menuIds="+this.menuIds, this.formData)
                              .then((res) => {
                                  if (res.data.flag) {
                                      this.$message({
@@ -310,24 +370,32 @@
             },
             //添加
             handleAdd() {
-                axios.post("/role/add.do?permissionIds=" + this.permissionIds, this.formData)
-                     .then((res) => {
-                         this.dialogFormVisible = false;
-                         if (res.data.flag) {
-                             //操作成功
-                             this.$message({
-                                 type: 'success',
-                                 message: res.data.message
-                             });
-                             this.findAll();
-                         } else {
-                             //操作失败
-                             this.$message.error(res.data.message);
-                         }
-                     }).finally(() => {
-                    this.findAll();
-                }).catch((res) => {
-                    this.showMessage(res);
+                this.$refs['dataAddForm'].validate((valid) => {
+                    if (valid) {
+                        axios.post("/role/add.do?permissionIds=" + this.permissionIds+"&menuIds="+this.menuIds, this.formData)
+                             .then((res) => {
+                                 this.dialogFormVisible = false;
+                                 if (res.data.flag) {
+                                     //操作成功
+                                     this.$message({
+                                         type: 'success',
+                                         message: res.data.message
+                                     });
+                                     this.findAll();
+                                 } else {
+                                     //操作失败
+                                     this.$message.error(res.data.message);
+                                 }
+                             }).finally(() => {
+                            this.findAll();
+                        }).catch((res) => {
+                            this.showMessage(res);
+                        });
+                    } else {
+                        //检验不通过
+                        this.$message.error("表单数据校验失败!");
+                        return false;
+                    }
                 });
             },
 
@@ -346,12 +414,19 @@
                 //发送ajax请求，查询所有的检查项信息，转为json，赋值给tableData
                 axios.get("/permission/findPermission.do").then((res) => {
                     if (res.data.flag) {
-                        //查询检查项数据成功
+                        //查询数据成功
                         this.tableData = res.data.data;
                     } else {
-                        //查询检查项数据失败
+                        //查询数据失败
                         this.$message.error(res.data.message);
                     }
+                    axios.get("/menu/findAll.do").then((res) => {
+                        if (res.data.flag) {
+                            this.menuData = res.data.data;
+                        } else {
+                            this.$message.error(res.data.message);
+                        }
+                    })
                 }).catch((res) => {
                     this.showMessage(res);
                 });
@@ -384,24 +459,17 @@
 
             // 添加权限
             intoPermission() {
-                this.$refs['dataAddForm'].validate((valid) => {
-                    if (valid) {
-                        this.dialogFormVisibleAdd = false;
-                        axios.post("/role/addPermission.do?permissionIds=" + this.permissionIds + "&id=" + this.roleId).then((res) => {
-                            if (res.data.flag) {
-                                this.$message({
-                                    type: 'success',
-                                    message: res.data.message
-                                });
-                                this.findAll();
-                            } else {
-                                this.$message.error((res.data.message))
-                            }
+                this.dialogFormVisibleAdd = false;
+                axios.post("/role/addPermission.do?permissionIds=" + this.permissionIds + "&id=" + this.roleId+"&menuIds="+this.menuIds).
+                    then((res) => {
+                    if (res.data.flag) {
+                        this.$message({
+                            type: 'success',
+                            message: res.data.message
                         });
+                        this.findAll();
                     } else {
-                        //校验失败
-                        this.$message.error("校验数据失败，请检查你输入的数据是否正确");
-                        return false;
+                        this.$message.error((res.data.message))
                     }
                 });
             },
@@ -420,7 +488,7 @@
                         this.$message.error(res.data.message)
                     }
                 });
-                //发送ajax请求，查询所有的检查项信息，转为json，赋值给tableData
+                //发送ajax请求，查询所有的信息，转为json，赋值给tableData
                 axios.post("/permission/findPermission.do").then((res) => {
                     if (res.data.flag) {
                         this.tableData = res.data.data;
@@ -437,6 +505,14 @@
                             this.$message.error(res.data.message)
                         }
                     });
+                    axios.get("/role/findMenuByRoleId.do?id="+row.id).then((res)=>{
+                        if (res.data.flag) {
+                            this.menuIds = res.data.data;
+                        } else {
+                            //查询检查项失败
+                            this.$message.error(res.data.message)
+                        }
+                    })
                 }).catch((res) => {
                     this.showMessage(res);
                 });

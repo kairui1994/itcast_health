@@ -45,4 +45,37 @@
           and tr.id = trm.role_id
           and tr.id = #{id}
     </select>
+
+    <select id="selectByCondition" parameterType="string" resultType="com.xdsdjq.pojo.Menu">
+        select *
+        from t_menu
+        <if test="queryString != null and queryString != ''">
+            where id = #{queryString}
+               or name = #{queryString}
+        </if>
+    </select>
+
+    <select id="findAll" resultType="com.xdsdjq.pojo.Menu">
+        select *
+        from t_menu
+    </select>
+
+    <insert id="add" parameterType="com.xdsdjq.pojo.Menu">
+        <selectKey keyColumn="id" resultType="integer" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into t_menu(name, linkUrl, path, priority, icon, description, parentMenuId, level)
+        VALUES (#{name}, #{linkUrl}, #{path}, #{priority}, #{icon}, #{description}, #{parentMenuId}, #{level})
+    </insert>
+
+    <insert id="addRoleByMenuId" parameterType="integer">
+        insert into t_role_menu(role_id, menu_id)
+        VALUES (#{roleId}, #{menuId})
+    </insert>
+
+    <select id="findRoleIdsByMenuId" parameterType="integer" resultType="java.lang.Integer">
+        select role_id
+        from t_role_menu
+        where menu_id = #{menuId}
+    </select>
 </mapper>

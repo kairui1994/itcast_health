@@ -59,8 +59,8 @@ public class MessageConstant {
     public static final String DELETE_ORDER_FAIL = "取消预约失败";
     public static final String GET_USERNAME_SUCCESS = "获取当前登录用户名称成功";
     public static final String GET_USERNAME_FAIL = "获取当前登录用户名称失败";
-    public static final String GET_MENU_SUCCESS = "获取当前登录用户菜单成功";
-    public static final String GET_MENU_FAIL = "获取当前登录用户菜单失败";
+    public static final String GET_MENU_SUCCESS = "获取菜单成功";
+    public static final String GET_MENU_FAIL = "获取菜单失败";
     public static final String GET_MEMBER_NUMBER_REPORT_SUCCESS = "获取会员统计数据成功";
     public static final String GET_MEMBER_NUMBER_REPORT_FAIL = "获取会员统计数据失败";
     public static final String GET_SETMEAL_COUNT_REPORT_SUCCESS = "获取套餐统计数据成功";
@@ -112,4 +112,15 @@ public class MessageConstant {
     public static final String GRANT_ROLE_FAIL = "授予角色失败";
     public static final String DELETE_ORDERS_FAIL = "批量删除预约失败";
     public static final String DELETE_ORDERS_SUCCESS = "批量删除预约成功";
+
+    public static final String QUERY_MENU_FAIL = "查询菜单信息失败";
+    public static final String QUERY_MENU_SUCCESS = "查询菜单信息成功";
+    public static final String ADD_MENU_FAIL = "添加菜单信息失败";
+    public static final String ADD_MENU_SUCCESS = "添加菜单信息成功";
+    public static final String EDIT_MENU_FAIL = "编辑菜单信息失败";
+    public static final String EDIT_MENU_SUCCESS = "编辑菜单信息成功";
+    public static final String DELETE_MENU_FAIL = "删除菜单信息失败";
+    public static final String DELETE_MENU_SUCCESS = "删除菜单信息成功";
+    public static final String GET_ROLEIDS_SUCCESS = "获取角色id成功";
+    public static final String GET_ROLEIDS_FAIL = "获取角色id成功";
 }

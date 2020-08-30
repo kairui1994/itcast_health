@@ -32,4 +32,47 @@
     <select id="findAll" resultType="com.xdsdjq.pojo.Permission">
         select * from t_permission
     </select>
+
+    <!-- 分页查询 -->
+    <select id="selectByCondition" parameterType="string" resultMap="baseResultMap">
+        select * from t_permission
+        <if test="value != null and value.length > 0">
+            where name = #{value}
+        </if>
+    </select>
+    <!--新增权限-->
+    <insert id="add" parameterType="com.xdsdjq.pojo.Permission">
+         insert into t_permission(name,keyword,description)
+        values
+        (#{name},#{keyword},#{description})
+    </insert>
+    <!--通过id查询权限-->
+    <select id="findById" parameterType="int" resultType="com.xdsdjq.pojo.Permission">
+        select * from t_permission where id = #{id}
+    </select>
+    <!--编辑权限-->
+    <update id="edit" parameterType="com.xdsdjq.pojo.Permission">
+        update t_permission
+        <set>
+            <if test="name!=null">
+                name = #{name},
+            </if>
+            <if test="keyword!=null">
+                keyword = #{keyword},
+            </if>
+
+            <if test="description!=null">
+                description = #{description},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <!--根据权限ID判断是否关联角色-->
+    <select id="findRoleAndPermissionById" resultType="long">
+        select count(*) from t_role_permission where permission_id = #{id}
+    </select>
+    <!-- 删除权限 -->
+    <delete id="deleteById" parameterType="int">
+        delete from t_permission where id = #{id}
+    </delete>
 </mapper>
