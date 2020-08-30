@@ -8,6 +8,7 @@ import com.xdsdjq.service.RoleService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,21 +20,19 @@ public class RoleController {
     private RoleService roleService;
 
     @RequestMapping("/findAll")
-    @PreAuthorize("hasAuthority('ROLE_QUERY')")
     public Result findAll() {
         try {
             List<Role> list = roleService.findAll();
-            return new Result(true, MessageConstant.QUERY_ROLE_SUCCESS, list);
+            return new Result(true, MessageConstant.ADD_ROLE_SUCCESS, list);
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(false, MessageConstant.QUERY_ROLE_FAIL);
         }
     }
     @RequestMapping("/add")
-    @PreAuthorize("hasAuthority('ROLE_ADD')")
-    public Result add(@RequestBody Role role, Integer[] permissionIds,Integer[] menuIds) {
+    public Result add(@RequestBody Role role, Integer[] permissionIds) {
         try {
-            roleService.add(role, permissionIds,menuIds);
+            roleService.add(role, permissionIds);
             return new Result(true, MessageConstant.ADD_ROLE_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
@@ -42,7 +41,6 @@ public class RoleController {
     }
 
     @RequestMapping("/findById")
-    @PreAuthorize("hasAuthority('ROLE_EDIT')")
     public Result findById(Integer id) {
         try {
             Role role = roleService.findById(id);
@@ -65,9 +63,9 @@ public class RoleController {
     }
 
     @RequestMapping("/edit")
-    public Result edit(@RequestBody Role role, Integer[] permissionIds,Integer[] menuIds) {
+    public Result edit(@RequestBody Role role, Integer[] permissionIds) {
         try {
-            roleService.edit(role, permissionIds,menuIds);
+            roleService.edit(role, permissionIds);
             return new Result(true, MessageConstant.EDIT_ROLE_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
@@ -76,7 +74,6 @@ public class RoleController {
     }
 
     @RequestMapping("/delete")
-    @PreAuthorize("hasAuthority('ROLE_DELETE')")
     public Result delete(Integer id) {
         try {
             roleService.deleteRole(id);
