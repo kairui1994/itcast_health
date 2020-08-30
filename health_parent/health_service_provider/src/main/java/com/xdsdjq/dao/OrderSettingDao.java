@@ -1,6 +1,7 @@
 package com.xdsdjq.dao;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.xdsdjq.entity.QueryPageBean;
 import com.xdsdjq.pojo.OrderSetting;
 
@@ -11,6 +12,8 @@ import java.util.Map;
 
 public interface OrderSettingDao {
     void add(OrderSetting data);
+
+
 
     Integer findCountByOrderDate(Date orderDate);
 

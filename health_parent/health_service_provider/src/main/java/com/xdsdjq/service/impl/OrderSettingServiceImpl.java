@@ -13,6 +13,7 @@ import com.xdsdjq.service.OrderSettingService;
 import com.xdsdjq.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.*;
 
 import static com.xdsdjq.pojo.Order.ORDERTYPE_TELEPHONE;
@@ -71,7 +72,7 @@ public class OrderSettingServiceImpl implements OrderSettingService {
         //开启分页查询
         PageHelper.startPage(currentPage, pageSize);
         //json对象转map
-        Map<String,Object> map = JSON.parseObject(queryString);
+        Map<String, Object> map = JSON.parseObject(queryString);
 
         //提取开始结束日期
         String startDate = (String) map.get("startDate");
@@ -95,16 +96,23 @@ public class OrderSettingServiceImpl implements OrderSettingService {
         //System.out.println(pageMap);
         //转成list集合
         List<Map<String, Object>> dbMap = pageMap.getResult();
+
+        for (Map<String, Object> stringObjectMap : dbMap) {
+            Date orderDate = (Date) stringObjectMap.get("orderDate");
+            String date2String = DateUtils.parseDate2String(orderDate);
+            stringObjectMap.replace("orderDate", date2String);
+        }
+
         //新建map封装前台需要的数据
         Map resoutmap = new HashMap();
-        resoutmap.put("total",pageMap.getTotal());//pageMap.getTotal()获取总条数
-        resoutmap.put("rows",dbMap);
+        resoutmap.put("total", pageMap.getTotal());//pageMap.getTotal()获取总条数
+        resoutmap.put("rows", dbMap);
         return resoutmap;
     }
 
     @Override
     public void submit(Integer[] setmealIds, Map<String, Object> map) throws Exception {
-        System.out.println(map+"===============================================");
+        System.out.println(map + "===============================================");
         String orderDate = (String) map.get("orderDate");
         Date date = DateUtils.parseString2Date(orderDate);
         //给order表赋值
@@ -138,9 +146,14 @@ public class OrderSettingServiceImpl implements OrderSettingService {
     public void deleteAll(Integer[] orderIds) {
         for (Integer orderId : orderIds) {
             String byStatus = orderDao.findByStatus(orderId);
-            if (byStatus.equals(Order.ORDERSTATUS_NO)){
+            if (byStatus.equals(Order.ORDERSTATUS_NO)) {
                 orderDao.deleteAll(orderId);
             }
         }
+    }
+
+    @Override
+    public String findByStatus(Integer id) {
+        return orderDao.findByStatus(id);
     }
 }

@@ -90,6 +90,13 @@
     </delete>
 
     <delete id="deleteRoleByUseId" parameterType="integer">
-        delete from t_user_role where user_id=#{userId}
+        delete
+        from t_user_role
+        where user_id = #{userId}
     </delete>
+
+    <insert id="addRoleByUserId">
+        insert into t_user_role(user_id, role_id)
+        values (#{userId}, #{roleId})
+    </insert>
 </mapper>

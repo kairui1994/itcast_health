@@ -27,4 +27,6 @@ public interface OrderSettingService {
     void editReservationsByOrderDate(OrderSetting orderSetting);
 
     void deleteAll(Integer[] orderIds);
+
+    String findByStatus(Integer id);
 }

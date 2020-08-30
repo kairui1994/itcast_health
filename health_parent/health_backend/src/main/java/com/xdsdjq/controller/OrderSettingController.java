@@ -87,6 +87,7 @@ public class OrderSettingController {
      * @return
      * @throws Exception
      */
+
     @RequestMapping("/findOrdersPage")
     public Map findOrdersPage(@RequestBody QueryPageBean queryPageBean) throws Exception {
         Map map = orderSettingService.findOrdersPage(queryPageBean);
@@ -141,8 +142,13 @@ public class OrderSettingController {
     @RequestMapping("/deleteOrderById")
     public Result deleteOrderById(Integer id){
         try {
-            orderSettingService.deleteOrderById(id);
-            return new Result(true,MessageConstant.DELETE_ORDERSETTING_SUCCESS);
+            String status= orderSettingService.findByStatus(id);
+            if (status.equals(Order.ORDERSTATUS_NO)) {
+                orderSettingService.deleteOrderById(id);
+                return new Result(true, MessageConstant.DELETE_ORDER_SUCCESS);
+            }else {
+                return new Result(false,MessageConstant.DELETEALL_ORDER_FAIL);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(false,MessageConstant.DELETE_ORDER_FAIL);
@@ -151,6 +157,12 @@ public class OrderSettingController {
     @RequestMapping("/deleteAll")
     public Result deleteAll(Integer[] orderIds){
         try {
+            for (Integer id : orderIds) {
+                String byStatus = orderSettingService.findByStatus(id);
+                if (byStatus.equals(Order.ORDERSTATUS_YES)){
+                    return new Result(false,MessageConstant.DELETEALL_ORDER_FAIL);
+                }
+            }
             orderSettingService.deleteAll(orderIds);
             return new Result(true,MessageConstant.DELETE_ORDERS_SUCCESS);
         } catch (Exception e) {
