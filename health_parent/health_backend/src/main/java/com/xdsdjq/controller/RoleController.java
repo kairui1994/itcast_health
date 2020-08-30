@@ -20,7 +20,6 @@ public class RoleController {
     private RoleService roleService;
 
     @RequestMapping("/findAll")
-    @PreAuthorize("hasAuthority('ROLE_QUERY')")
     public Result findAll() {
         try {
             List<Role> list = roleService.findAll();
@@ -32,7 +31,6 @@ public class RoleController {
     }
 
     @RequestMapping("/add")
-    @PreAuthorize("hasAuthority('ROLE_ADD')")
     public Result add(@RequestBody Role role, Integer[] permissionIds) {
         try {
             roleService.add(role, permissionIds);
@@ -44,7 +42,6 @@ public class RoleController {
     }
 
     @RequestMapping("/findById")
-    @PreAuthorize("hasAuthority('ROLE_EDIT')")
     public Result findById(Integer id) {
         try {
             Role role = roleService.findById(id);
@@ -78,7 +75,6 @@ public class RoleController {
     }
 
     @RequestMapping("/delete")
-    @PreAuthorize("hasAuthority('ROLE_DELETE')")
     public Result delete(Integer id) {
         try {
             roleService.deleteRole(id);
