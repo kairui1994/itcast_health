@@ -95,7 +95,7 @@
         where id = #{id}
     </delete>
 
-    <insert id="addRoleByUserId" parameterType="int">
+    <insert id="addRoleByUserId" parameterType="integer">
         insert into t_user_role(user_id, role_id)
         values (#{userId}, #{roleId})
     </insert>
@@ -105,4 +105,17 @@
         from t_user_role
         where user_id = #{userId}
     </select>
+
+
+    <update id="setRoleAndMenu" parameterType="int">
+        insert into t_role_menu(role_id, menu_id) values(#{id},#{menuId})
+    </update>
+
+    <select id="findMenuByRoleId" resultType="java.lang.Integer" parameterType="int">
+        select menu_id from t_role_menu where role_id=#{id}
+    </select>
+
+    <delete id="deleteRoleAndMenu" parameterType="int">
+        delete from t_role_menu where role_id=#{id}
+    </delete>
 </mapper>

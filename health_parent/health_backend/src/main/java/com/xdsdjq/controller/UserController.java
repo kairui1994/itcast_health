@@ -129,12 +129,4 @@ public class UserController {
         }
 
     }
-
-    @Test
-    public void Test(){
-        System.out.println("测试111");
-        System.out.println("测试222");
-        System.out.println("测试333");
-        System.out.println("测试444");
-    }
 }

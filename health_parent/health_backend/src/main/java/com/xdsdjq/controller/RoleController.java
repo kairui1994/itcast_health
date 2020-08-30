@@ -107,4 +107,15 @@ public class RoleController {
             return new Result(false, MessageConstant.QUERY_ROLE_FAIL);
         }
     }
+
+    @RequestMapping("/findMenuByRoleId")
+    public Result findMenuByRoleId(Integer id) {
+        try {
+            List<Integer> list = roleService.findMenuByRoleId(id);
+            return new Result(true, MessageConstant.QUERY_MENU_SUCCESS, list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.QUERY_MENU_FAIL);
+        }
+    }
 }

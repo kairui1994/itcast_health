@@ -57,6 +57,9 @@
     <update id="edit">
         update t_user
         <set>
+            <if test="username != null">
+                username=#{username},
+            </if>
             <if test="birthday != null">
                 birthday=#{birthday},
             </if>
