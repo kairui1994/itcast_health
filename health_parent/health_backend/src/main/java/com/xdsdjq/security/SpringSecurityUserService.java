@@ -23,6 +23,7 @@ public class SpringSecurityUserService implements UserDetailsService {
     private UserService userService;
 
     //由SpringSecurity自动调用
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userService.findByUsername(username);
         if (user == null) {

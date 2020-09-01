@@ -11,6 +11,7 @@ import java.io.IOException;
 @Component
 public class LoginFail implements AuthenticationFailureHandler {
 
+    @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         request.getSession().setAttribute("result",false);
         response.sendRedirect("/login.html");

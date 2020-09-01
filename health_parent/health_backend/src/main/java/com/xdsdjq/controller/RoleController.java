@@ -30,9 +30,9 @@ public class RoleController {
         }
     }
     @RequestMapping("/add")
-    public Result add(@RequestBody Role role, Integer[] permissionIds) {
+    public Result add(@RequestBody Role role, Integer[] permissionIds,Integer[] menuIds) {
         try {
-            roleService.add(role, permissionIds);
+            roleService.add(role, permissionIds,menuIds);
             return new Result(true, MessageConstant.ADD_ROLE_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,9 +63,9 @@ public class RoleController {
     }
 
     @RequestMapping("/edit")
-    public Result edit(@RequestBody Role role, Integer[] permissionIds) {
+    public Result edit(@RequestBody Role role, Integer[] permissionIds,Integer[] menuIds) {
         try {
-            roleService.edit(role, permissionIds);
+            roleService.edit(role, permissionIds,menuIds);
             return new Result(true, MessageConstant.EDIT_ROLE_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();

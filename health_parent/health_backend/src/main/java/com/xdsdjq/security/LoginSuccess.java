@@ -12,6 +12,7 @@ import java.io.IOException;
 
 @Component
 public class LoginSuccess implements AuthenticationSuccessHandler {
+    @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         response.setContentType("text/html;charset=UTF-8");
 
